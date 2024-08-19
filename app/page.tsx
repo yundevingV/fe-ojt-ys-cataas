@@ -1,11 +1,12 @@
 "use client";
 
 import { getTags, GetTagsDTO } from "@/api/tags/getTags";
+import Tag from "@/components/tag";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
 
-  const { data: tagsData, isLoading, error } = useQuery<GetTagsDTO[]>({
+  const { data: tagsData, isLoading, error } = useQuery<GetTagsDTO>({
     queryKey: ['tags-data'], // 쿼리 키
     queryFn: getTags, // getTags 함수 참조
   });
@@ -21,7 +22,7 @@ export default function Home() {
   return (
     <div>
       {tagsData?.map((item, index) => (
-        <p key={index}>{item}</p> // 문자열을 직접 출력
+        <Tag key={index} content={item} /> 
       ))}
     </div>
     );
