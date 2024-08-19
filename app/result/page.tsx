@@ -9,7 +9,7 @@ export default function Result() {
   const { data: catData, isLoading, error } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['cat-data', tag], // 쿼리 키
-      queryFn: () => getCats(tag), // getCats 함수에 태그를 전달합니다.
+      queryFn: () => getCats({page : 10, skip : 0, tag : tag}), // getCats 함수에 태그를 전달합니다.
     }
   );
 
@@ -25,7 +25,7 @@ export default function Result() {
     <>
       <h2>검색 결과:</h2>
       <ul>
-        {catData?.map(cat => (
+        {catData?.cats.map(cat => (
           <li key={cat._id}>{cat._id}</li>
         ))}
       </ul>
