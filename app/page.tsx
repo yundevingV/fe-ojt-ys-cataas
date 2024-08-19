@@ -23,10 +23,20 @@ export default function Home() {
   const randomTags = tagsData ? getRandomItems(tagsData, 8) : []; // 랜덤으로 8개 선택
 
   return (
-    <div className="w-2/3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4"> {/* Tailwind CSS 그리드 클래스 사용 */}
-      {randomTags?.map((item, index) => (
-        <Tag key={index} content={item} /> 
-      ))}
+    <div className="">
+      <div className="fixed w-full left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center p-4">
+        <h2 className="text-center">태그를 클릭해 고양이를 검색해보세요.</h2>
+
+        {/* 검색 태그 */}
+        <div className="w-2/3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
+          {randomTags?.map((item, index) => (
+            <Tag key={index} content={item} />
+          ))}
+        </div>
+      </div>
+
+      
     </div>
-    );
+
+  );
 }
