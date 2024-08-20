@@ -35,7 +35,7 @@ export default function Home() {
   }
 
   const randomTags = tagsData ? getRandomItems(tagsData, 8) : []; // 랜덤으로 8개 선택
-  console.log(catData?.cats)
+
   return (
     <div className="">
       {/* 검색 헤더 */}
@@ -52,7 +52,7 @@ export default function Home() {
       <div className="pt-[300px] md:pt-[190px] w-2/3 mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4"> {/* gap을 추가하여 아이템 간의 여백을 설정 */}
           {catData?.cats.map(cat => (
-            <SearchBox key={cat._id} image="a" tags={cat} />
+            <SearchBox key={cat._id} tags={cat} />
           ))}
         </div>
       </div>
