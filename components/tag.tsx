@@ -1,5 +1,4 @@
 import useGetRandomBackgrounds from "@/hooks/useGetRandomBackground";
-import { useState } from "react";
 
 interface TagProps {
   content: string;

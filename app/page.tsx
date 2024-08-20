@@ -5,6 +5,7 @@ import { getTags, GetTagsDTO } from "@/api/tags/getTags";
 import SearchBox from "@/components/SearchBox";
 import Tag from "@/components/tag";
 import getRandomItems from "@/util/getRandomItems";
+import getRandomNumbers from "@/util/getRandomNumber";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
   const { data: catData, isLoading: isCatLoading, error: catError } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['cat-data'], // 쿼리 키
-      queryFn: () => getCats({ page: 10, skip: 0, tag: '' }), // getCats 함수에 태그를 전달합니다.
+      queryFn: () => getCats({ page: 10, skip: getRandomNumbers(0,150), tag: '' }), // getCats 함수에 태그를 전달합니다.
     }
   );
 
