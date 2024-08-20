@@ -1,5 +1,5 @@
 import { CatDTO } from "@/api/cats/getCats";
-import Tag from "@/components/tag";
+import Tag from "@/components/Tag";
 
 export interface SearchBoxProps {
   tags: CatDTO;

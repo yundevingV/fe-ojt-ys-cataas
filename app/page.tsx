@@ -2,8 +2,11 @@
 
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import { getTags, GetTagsDTO } from "@/api/tags/getTags";
+import Header from "@/components/header/Header";
 import SearchBox from "@/components/SearchBox";
-import Tag from "@/components/tag";
+import Tag from "@/components/Tag";
+import ButtonTags from "@/components/Tags/ButtonTags";
+import ButtonTagsBox from "@/components/Tags/ButtonTagsBox";
 import getRandomItems from "@/util/getRandomItems";
 import getRandomNumbers from "@/util/getRandomNumber";
 import { useQuery } from "@tanstack/react-query";
@@ -40,23 +43,10 @@ export default function Home() {
   return (
     <div className="">
       {/* 검색 헤더 */}
-      <div className="fixed w-full left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center p-4">
-        <h2 className="text-center">태그를 클릭해 고양이를 검색해보세요.</h2>
+      <Header />
 
-        {/* 검색 태그 */}
-        <div className="w-2/3 grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
-          {randomTags?.map((item, index) => (
-            <Tag key={index} content={item} />
-          ))}
-        </div>
-      </div>
-      <div className="pt-[300px] md:pt-[190px] w-2/3 mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4"> {/* gap을 추가하여 아이템 간의 여백을 설정 */}
-          {catData?.cats.map(cat => (
-            <SearchBox key={cat._id} tags={cat} />
-          ))}
-        </div>
-      </div>
+      {/* 버튼 태그 */}
+      <ButtonTagsBox randomTags={randomTags} />
 
     </div>
   );
