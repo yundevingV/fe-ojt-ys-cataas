@@ -3,6 +3,7 @@
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import { getTags, GetTagsDTO } from "@/api/tags/getTags";
 import Header from "@/components/header/Header";
+import SearchImage from "@/components/Result/SearchImage";
 import ButtonTagsBox from "@/components/Tags/ButtonTagsBox";
 import getRandomItems from "@/util/getRandomItems";
 import getRandomNumbers from "@/util/getRandomNumber";
@@ -17,8 +18,8 @@ export default function Home() {
 
   const { data: catData, isLoading: isCatLoading, error: catError } = useQuery<GetCatsDTO, Error>(
     {
-      queryKey: ['cat-data'], // 쿼리 키
-      queryFn: () => getCats({ page: 10, skip: getRandomNumbers(0,150), tag: '' }), // getCats 함수에 태그를 전달합니다.
+      queryKey: ['first-cat-data'], // 쿼리 키
+      queryFn: () => getCats({ limit: 10, skip: getRandomNumbers(0, 150), tag: '' }), // getCats 함수에 태그를 전달합니다.
     }
   );
 
@@ -45,6 +46,14 @@ export default function Home() {
       {/* 버튼 태그 */}
       <ButtonTagsBox randomTags={randomTags} />
 
+      {/* 랜덤 검색 결과 */}
+      <div className="grid grid-cols-2 gap-4 2xl:grid-cols-2 1024:grid-cols-3 md:grid-cols-4
+      p-2">
+
+        {catData?.cats.map(cat => (
+          <SearchImage key={cat._id} cats={cat} />
+        ))}
+      </div>
     </div>
   );
 }

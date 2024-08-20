@@ -6,7 +6,7 @@ interface ButtonTagsProps {
 
 export default function ButtonTags({ content }: ButtonTagsProps) {
   return (
-    <Link href={`search/?q=${content}`}>
+    <Link href={`result/?q=${content}`}>
       <button
         className={`w-auto h-10 px-4 py-0 cursor-pointer font-semibold items-center
       rounded-3xl
