@@ -3,7 +3,7 @@
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import { getTags, GetTagsDTO } from "@/api/tags/getTags";
 import SearchBox from "@/components/SearchBox";
-import Tag from "@/components/tag";
+import Tag from "@/components/Tag";
 import getRandomItems from "@/util/getRandomItems";
 import getRandomNumbers from "@/util/getRandomNumber";
 import { useQuery } from "@tanstack/react-query";
