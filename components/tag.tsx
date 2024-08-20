@@ -31,7 +31,8 @@ export default function Tag({ content, size }: TagProps) {
 <button 
   className={`max-w-[150px] w-auto h-auto px-5 py-2 rounded-lg text-[#2b2b2b]
   active:opacity-80 ${currentBackground} cursor-pointer 
-  overflow-hidden whitespace-nowrap text-ellipsis ${sizeClass}`}
+  overflow-hidden whitespace-nowrap text-ellipsis ${sizeClass} 
+  md:text-base md:px-5 md:py-2 text-sm px-3 py-1`}
   
   title={content}
   >
