@@ -9,15 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'background-white': '#FFFFFF',
-        'background-grey': '#979797',
-        'background-yellow': '#FFC5AC',
-        'background-green': '#B9E7BB',
-        'background-kiwi': '#DDF873',
-        'background-purple': '#EAD3FC',
-        'background-pink': '#FF93FB',
-        'background-sky': '#A9FFFA',
-        'background-lock': '#FFC5AC',
+        "main" : "#B6D3FF"
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

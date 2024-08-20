@@ -2,9 +2,9 @@ import { client } from "@/api/client"
 
 // 요청 DTO 인터페이스
 export interface RequestDTO {
-  page: number;
+  limit: number;
   skip: number;
-  tag?: string;
+  tag?: string | null;
 }
 
 // 고양이 데이터 구조 인터페이스
@@ -23,8 +23,8 @@ export interface GetCatsDTO {
 }
 
 // 고양이 데이터를 가져오는 함수
-export const getCats = async ({ page, skip, tag }: RequestDTO): Promise<GetCatsDTO> => {
-  const url = `/api/cats?page=${page}&skip=${skip}&tag=${tag}`;
+export const getCats = async ({ limit, skip, tag }: RequestDTO): Promise<GetCatsDTO> => {
+  const url = `/api/cats?limit=${limit}&skip=${skip}&tags=${tag}`;
   try {
     const { data } = await client.get<CatDTO[]>(url);
     return { cats: data }; // CatDTO 배열을 포함하는 객체 반환

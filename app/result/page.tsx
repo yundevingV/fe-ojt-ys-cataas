@@ -1,15 +1,25 @@
 "use client";
 
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
+import Header from "@/components/header/Header";
+import SearchImage from "@/components/Result/SearchImage";
 import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation"; // 쿼리 파라미터를 가져오기 위해 추가
+import { useState } from "react";
 
 export default function Result() {
-  const tag = 'Bengal'; // 사용할 태그를 정의합니다.
+  const searchParams = useSearchParams();
+  const tag = searchParams.get("q"); // 쿼리 파라미터에서 tag 가져오기
+
+  const [limit, setLimit] = useState<number>(10);
+  const [skip, setSkip] = useState<number>(0);
 
   const { data: catData, isLoading, error } = useQuery<GetCatsDTO, Error>(
     {
-      queryKey: ['cat-data', tag], // 쿼리 키
-      queryFn: () => getCats({page : 10, skip : 0, tag : tag}), // getCats 함수에 태그를 전달합니다.
+      queryKey: ['cat-data', limit, skip, tag], // 쿼리 키
+      queryFn: () => getCats({ limit: limit, skip: skip, tag: tag }), // getCats 함수에 태그를 전달합니다.
+      enabled: !!tag, // tag가 있을 때만 쿼리 실행
+
     }
   );
 
@@ -23,12 +33,17 @@ export default function Result() {
 
   return (
     <>
-      <h2>검색 결과:</h2>
-      <ul>
+      <Header />
+      
+      <h2>{tag} 의 검색 결과: </h2>
+
+      <div 
+        className="grid grid-cols-2 gap-4 2xl:grid-cols-2 1024:grid-cols-3 md:grid-cols-4
+        p-2">
         {catData?.cats.map(cat => (
-          <li key={cat._id}>{cat._id}</li>
+          <SearchImage cats={cat} />
         ))}
-      </ul>
+      </div>
     </>
   );
 }
