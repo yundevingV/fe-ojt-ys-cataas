@@ -2,13 +2,12 @@
 
 import { getCatDetail } from "@/api/cats/getCatDetail";
 import { CatDTO } from "@/api/cats/getCats";
-import Tag from "@/components/Tag";
 import { useQuery } from "@tanstack/react-query";
 import calculateDateDifference from "@/util/calculateDateDifference";
-import { useEffect, useRef, useState } from "react";
 import calculateBytesToSize from "@/util/calculateBytesToSize";
 import Header from "@/components/header/Header";
 import ImageInfo from "@/components/Result/ImageInfo";
+import ButtonTags from "@/components/Tags/ButtonTags";
 
 interface ResultDetailProps {
   params: {
@@ -60,7 +59,7 @@ export default function ResultDetail({ params }: ResultDetailProps) {
     
           <div className="flex">
             {catData?.tags.map((tag, index) => (
-              <Tag key={index} content={tag} />
+              <ButtonTags key={index} content={tag} hover="" active=""/>
             ))}
           </div>
         </div>
