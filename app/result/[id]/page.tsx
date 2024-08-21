@@ -8,6 +8,7 @@ import calculateDateDifference from "@/util/calculateDateDifference";
 import { useEffect, useRef, useState } from "react";
 import calculateBytesToSize from "@/util/calculateBytesToSize";
 import Header from "@/components/header/Header";
+import ImageInfo from "@/components/Result/ImageInfo";
 
 interface ResultDetailProps {
   params: {
@@ -51,24 +52,12 @@ export default function ResultDetail({ params }: ResultDetailProps) {
 
         {/* 오른쪽부분 */}
         <div className="flex-col px-6 w-80 space-y-2">
-        <div className="flex justify-between">
-            <p className=""></p>
-            <p>{calculateDateDifference(createdAt)} 일전</p>
-          </div>
-          <div className="flex justify-between">
-            <p className="">등록일: </p>
-            <p>{createdAt?.toLocaleString().split('오')[0]}</p>
-          </div>
-          <div className="flex justify-between">
-            <p className="">최종 수정일: </p>
-            <p>{editedAt?.toLocaleString().split('오')[0]}</p>
-          </div>
-          
-          
-          <div className="flex justify-between">
-            <p className="">크기</p>
-            <p className="">{calculateBytesToSize(catData?.size)}</p>
-          </div>
+      
+          <ImageInfo leftText='' rightText={`${calculateDateDifference(createdAt) + ' 일전'}` } />
+          <ImageInfo leftText='등록일' rightText={createdAt?.toLocaleString().split('오')[0]} />
+          <ImageInfo leftText='최종 수정일' rightText={editedAt?.toLocaleString().split('오')[0]} />
+          <ImageInfo leftText='크기' rightText={`${calculateBytesToSize(catData?.size)}`} />
+    
           <div className="flex">
             {catData?.tags.map((tag, index) => (
               <Tag key={index} content={tag} />
