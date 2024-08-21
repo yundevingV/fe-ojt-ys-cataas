@@ -33,9 +33,11 @@ export default function Home() {
   const handleLoadMore = () => {
     setVisibleItems((prevVisible) => prevVisible + ITEMS_PER_LOAD);
   };
+
   const handleLoadLess = () => {
     setVisibleItems((prevVisible) => prevVisible - ITEMS_PER_LOAD);
   };
+
   const { data: catData, isLoading: isCatLoading, error: catError } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['first-cat-data'], // 쿼리 키
@@ -68,15 +70,15 @@ export default function Home() {
         <ButtonTagsBox randomTags={currentItems} />
         {visibleItems < (tagsData?.length || 0) && (
           <div>
-            {visibleItems > 8 && 
-            <button
-              onClick={handleLoadLess}
-              className="text-[#b2b2b2] rounded-lg px-4 py-2
-         hover:bg-slate-200 
-         active:bg-slate-300 
-         ">
-              접기
-            </button>
+            {visibleItems > 8 &&
+              <button
+                onClick={handleLoadLess}
+                className="text-[#b2b2b2] rounded-lg px-4 py-2
+          hover:bg-slate-200 
+          active:bg-slate-300 
+          ">
+                접기
+              </button>
             }
             <button
               onClick={handleLoadMore}

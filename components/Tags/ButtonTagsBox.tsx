@@ -17,7 +17,7 @@ export default function ButtonTagsBox({ randomTags }: ButtonTagsBoxProps) {
       {rows.map((row, rowIndex) => (
         <div key={rowIndex} className="flex justify-center space-x-5">
           {row.map((tag, index) => (
-            <ButtonTags key={index} content={tag} />
+            <ButtonTags key={index} content={tag} hover="hover:bg-slate-200" active="active:bg-slate-300"/>
           ))}
         </div>
       ))}
