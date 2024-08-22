@@ -39,7 +39,7 @@ export default function ResultDetail({ params }: ResultDetailProps) {
     <div>
       <Header />
 
-      <div className="flex p-8 text-xl justify-between">
+      <div className="flex p-8 text-xl justify-between pt-[180px]">
         {/* 왼쪽부분 */}
         <div>
           <img

@@ -9,6 +9,7 @@ import ButtonTagsBox from "../Tags/ButtonTagsBox";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
+import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
 
 export default function Header() {
 
@@ -20,14 +21,13 @@ export default function Header() {
   const searchParams = useSearchParams();
 
   const { openSearchModal, setSearchModal } = useSearchModalStore();
+  const {selectedTags, addTag, removeTag} = useSelectedTagsStore();
 
   const router = useRouter();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]); // 선택된 태그 배열 상태
   const modalRef = useRef<HTMLDivElement>(null); // 모달 참조
 
   const handleSubmit = (selectedTags: string[]) => {
-    // 여기서 검색 처리 로직을 추가할 수 있습니다.
     if (selectedTags) {
       // 태그를 ','로 구분하여 URL로 이동
       router.push(`/result/?q=${selectedTags}`);
@@ -74,7 +74,7 @@ export default function Header() {
     setRamdomTag(refreshTags)
   }
 
-  // 쿼리 파라미터에서 tag 가져오기
+// 쿼리 파라미터에서 tag 가져오기
   const tag = searchParams.get("q");
 
   // tag가 undefined일 경우 빈 배열로 처리
@@ -82,8 +82,11 @@ export default function Header() {
 
   // 기존 검색어 배열 저장
   useEffect(() => {
-    setSelectedTags(prevTagArray);
-  }, [tag]);
+    prevTagArray.forEach(tag => {
+      addTag(tag); // 각 태그를 상태에 추가
+    });
+  }, [tag, addTag]); // tag가 변경될 때마다 실행
+
 
   useEffect(() => {
     const randomTags = tagsData ? getRandomItems(tagsData, 10) : []; // 랜덤으로 10개 선택
@@ -120,7 +123,7 @@ export default function Header() {
                 <div className="">
                   <h3 className="text-lg font-semibold">선택된 태그 </h3>
                   <div className="flex">
-                    <ButtonTagsBox randomTags={selectedTags} setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
+                    <ButtonTagsBox tag={selectedTags} />
                   </div>
                 </div>
               }
@@ -137,7 +140,7 @@ export default function Header() {
               </div>
 
               <div className="flex flex-wrap space-x-2">
-                {randomTags && <ButtonTagsBox randomTags={randomTags} setSelectedTags={setSelectedTags} />}
+                {randomTags && <ButtonTagsBox tag={randomTags} />}
               </div>
 
             </div>
