@@ -28,10 +28,10 @@ export default function Header() {
     // 여기서 검색 처리 로직을 추가할 수 있습니다.
     if (selectedTags) {
       // 태그를 ','로 구분하여 URL로 이동
-      router.push(`/result/${selectedTags}`);
+      router.push(`/result/?q=${selectedTags}`);
     }
   };
-  
+
   const handleKeyPress = (event : any) => {
     if (event.key === 'Enter') {
       handleSubmit; // 엔터 키를 눌렀을 때 이동

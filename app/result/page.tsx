@@ -39,7 +39,7 @@ export default function Result() {
 
       <div 
         className="grid grid-cols-2 gap-4 2xl:grid-cols-2 1024:grid-cols-3 md:grid-cols-4
-        p-2">
+        p-2 pt-[140px]">
         {catData?.cats.map(cat => (
           <SearchImage cats={cat} />
         ))}

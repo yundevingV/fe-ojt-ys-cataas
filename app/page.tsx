@@ -1,12 +1,10 @@
 "use client";
 
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
-import { getTags, GetTagsDTO } from "@/api/tags/getTags";
 import Header from "@/components/header/Header";
 import SearchImage from "@/components/Result/SearchImage";
 import getRandomNumbers from "@/util/getRandomNumber";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 
 export default function Home() {
 
@@ -14,11 +12,9 @@ export default function Home() {
     {
       queryKey: ['first-cat-data'], // 쿼리 키
       queryFn: () => getCats({ limit: 10, skip: getRandomNumbers(0, 150), tag: '' }), // getCats 함수에 태그를 전달합니다.
+      staleTime: 1000 * 60 * 5, 
     }
   );
-
-  //검색 모달창
-  const [openSearchModal, setSearchModal] = useState<boolean>(false);
 
   if (isCatLoading) {
     return <p>로딩 중</p>;

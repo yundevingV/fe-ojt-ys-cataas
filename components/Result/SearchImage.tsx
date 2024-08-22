@@ -17,7 +17,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link href={`/result/${cats._id}`}>
+      <Link href={`/detail/${cats._id}`}>
         <img
           src={`https://cataas.com/cat/${cats._id}`}
           alt="고양이 이미지"
