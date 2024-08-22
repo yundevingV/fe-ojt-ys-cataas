@@ -6,7 +6,7 @@ import { CiSearch } from "react-icons/ci";
 import { GrPowerReset } from "react-icons/gr";
 import getRandomItems from "@/util/getRandomItems";
 import ButtonTagsBox from "../Tags/ButtonTagsBox";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
 
@@ -17,6 +17,8 @@ export default function Header() {
     queryFn: getTags, // getTags 함수 참조
   });
 
+  const searchParams = useSearchParams();
+
   const { openSearchModal, setSearchModal } = useSearchModalStore();
 
   const router = useRouter();
@@ -24,7 +26,7 @@ export default function Header() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]); // 선택된 태그 배열 상태
   const modalRef = useRef<HTMLDivElement>(null); // 모달 참조
 
-  const handleSubmit = (selectedTags : string[]) => {
+  const handleSubmit = (selectedTags: string[]) => {
     // 여기서 검색 처리 로직을 추가할 수 있습니다.
     if (selectedTags) {
       // 태그를 ','로 구분하여 URL로 이동
@@ -32,7 +34,7 @@ export default function Header() {
     }
   };
 
-  const handleKeyPress = (event : any) => {
+  const handleKeyPress = (event: any) => {
     if (event.key === 'Enter') {
       handleSubmit; // 엔터 키를 눌렀을 때 이동
     }
@@ -72,9 +74,19 @@ export default function Header() {
     setRamdomTag(refreshTags)
   }
 
+  // 쿼리 파라미터에서 tag 가져오기
+  const tag = searchParams.get("q");
+
+  // tag가 undefined일 경우 빈 배열로 처리
+  const prevTagArray = tag ? tag.split(',') : [];
+
+  useEffect(() => {
+    setSelectedTags(prevTagArray); // 배열을 그대로 전달
+  }, [tag]);
+
   useEffect(() => {
     const randomTags = tagsData ? getRandomItems(tagsData, 10) : []; // 랜덤으로 10개 선택
-    setRamdomTag(randomTags)
+    setRamdomTag(randomTags);
   }, [tagsData])
 
 
@@ -96,7 +108,7 @@ export default function Header() {
           onKeyDown={handleKeyPress}
         />
 
-        <CiSearch onClick={()=>handleSubmit(selectedTags)} className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
+        <CiSearch onClick={() => handleSubmit(selectedTags)} className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
 
         {openSearchModal && (
           <>
@@ -107,7 +119,7 @@ export default function Header() {
                 <div className="">
                   <h3 className="text-lg font-semibold">선택된 태그 </h3>
                   <div className="flex">
-                      <ButtonTagsBox randomTags={selectedTags} setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
+                    <ButtonTagsBox randomTags={selectedTags} setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
                   </div>
                 </div>
               }
@@ -126,7 +138,7 @@ export default function Header() {
               <div className="flex flex-wrap space-x-2">
                 {randomTags && <ButtonTagsBox randomTags={randomTags} setSelectedTags={setSelectedTags} />}
               </div>
-              
+
             </div>
           </>
         )}
