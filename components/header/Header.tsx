@@ -21,7 +21,7 @@ export default function Header() {
   const searchParams = useSearchParams();
 
   const { openSearchModal, setSearchModal } = useSearchModalStore();
-  const {selectedTags, addTag, removeTag} = useSelectedTagsStore();
+  const {selectedTags, addTag} = useSelectedTagsStore();
 
   const router = useRouter();
 
@@ -87,12 +87,18 @@ export default function Header() {
     });
   }, [tag, addTag]); // tag가 변경될 때마다 실행
 
-
   useEffect(() => {
     const randomTags = tagsData ? getRandomItems(tagsData, 10) : []; // 랜덤으로 10개 선택
     setRamdomTag(randomTags);
   }, [tagsData])
 
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>오류 발생: {error.message}</div>;
+  }
 
   return (
     <div className={`fixed w-full h-[100px] p-5 pr-10 bg-white shadow-md z-10 flex items-center justify-between`}>

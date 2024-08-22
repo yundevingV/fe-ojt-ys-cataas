@@ -5,7 +5,8 @@ interface ButtonTagsProps {
   textColor?: string;
   hover: string;
   active: string;
-  onClick?: (tag : string) => void; // 클릭 핸들러
+  isClickedStyle?: string; // 이미지에서 클릭 스타일
+  onClick?: (tag: string) => void; // 클릭 핸들러
   selectedTags?: string[]; // 선택된 태그 배열
 }
 
@@ -14,10 +15,11 @@ export default function ButtonTags({
   textColor,
   hover,
   active,
+  isClickedStyle,
   onClick,
 }: ButtonTagsProps) {
 
-  const {selectedTags, addTag, removeTag} = useSelectedTagsStore();
+  const { selectedTags, addTag, removeTag } = useSelectedTagsStore();
 
   // tag가 선택되었는지 판별
   const isClickedTag = selectedTags?.includes(content);
@@ -32,23 +34,28 @@ export default function ButtonTags({
       addTag(tag);
     }
   };
-  
+  const className =
+    isClickedTag && isClickedStyle
+      ? isClickedStyle
+      : isClickedTag
+        ? 'h-10 bg-slate-200 border-2 border-sky-400 rounded-3xl px-4 py-0 w-auto'
+        : '';
   return (
     <button
       className={`w-auto flex-row h-10 px-4 py-0 cursor-pointer font-semibold items-center border-2 border-transparent	
-      rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '') } ${!isClickedTag && (active ? active : '')}
+      rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
  
       opacity-60 `}
-      onClick={isClickedTag ? undefined : ()=>toggleTag?.(content)} // 클릭 핸들러 설정
+      onClick={isClickedTag ? undefined : () => toggleTag?.(content)} // 클릭 핸들러 설정
     >
       <div className={`flex items-center
-        ${isClickedTag ? 'h-10 bg-slate-200 border-2 border-sky-400 rounded-3xl px-4 py-0 w-auto' : ''}
+${className}
       `}>
         {content}
         {isClickedTag && (
-          <p 
+          <p
             className="ml-2 cursor-pointer text-red-600"
-            onClick={()=>toggleTag?.(content)} 
+            onClick={() => toggleTag?.(content)}
           >
             x
           </p>
