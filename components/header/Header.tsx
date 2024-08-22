@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
 import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
+import Link from "next/link";
 
 export default function Header() {
 
@@ -21,7 +22,7 @@ export default function Header() {
   const searchParams = useSearchParams();
 
   const { openSearchModal, setSearchModal } = useSearchModalStore();
-  const {selectedTags, addTag} = useSelectedTagsStore();
+  const { selectedTags, addTag } = useSelectedTagsStore();
 
   const router = useRouter();
 
@@ -30,7 +31,7 @@ export default function Header() {
   const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags) {
       // 태그를 ','로 구분하여 URL로 이동
-      router.push(`/result/?q=${selectedTags}`);
+      router.push(`/result?tag=${selectedTags}`);
     }
   };
 
@@ -74,7 +75,7 @@ export default function Header() {
     setRamdomTag(refreshTags)
   }
 
-// 쿼리 파라미터에서 tag 가져오기
+  // 쿼리 파라미터에서 tag 가져오기
   const tag = searchParams.get("q");
 
   // tag가 undefined일 경우 빈 배열로 처리
@@ -102,8 +103,10 @@ export default function Header() {
 
   return (
     <div className={`fixed w-full h-[100px] p-5 pr-10 bg-white shadow-md z-10 flex items-center justify-between`}>
-      <p className={`text-[28px] font-bold text-gray-800`}>cataas</p>
 
+      <Link href='/'>
+        <p className={`text-[28px] font-bold text-gray-800`}>cataas</p>
+      </Link>
       <div
         // onSubmit={()=>handleSubmit}
         className="flex items-center relative w-1/3">

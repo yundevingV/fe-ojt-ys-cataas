@@ -1,16 +1,14 @@
 import { CatDTO } from "@/api/cats/getCats";
-import ButtonTags from "@/components/Tags/ButtonTags"
+import ButtonTags from "@/components/Tags/ButtonTags";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export interface SearchImageProps {
   cats: CatDTO;
 }
 
 export default function SearchImage({ cats }: SearchImageProps) {
-
   const [isHovered, setIsHovered] = useState(false);
-
   const [, setSelectedTags] = useState<string[]>([]);
 
   // 태그 클릭 핸들러
@@ -25,6 +23,24 @@ export default function SearchImage({ cats }: SearchImageProps) {
       }
     });
   };
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const checkHeight = () => {
+      if (containerRef.current) {
+        const { scrollHeight } = containerRef.current;
+        if (scrollHeight > 60) {
+
+        }
+      }
+    };
+
+    if (isHovered) {
+      checkHeight();
+    }
+  }, [cats.tags, isHovered]);
+
   return (
     <div
       className="relative cursor-pointer"
@@ -39,13 +55,14 @@ export default function SearchImage({ cats }: SearchImageProps) {
         />
       </Link>
 
-      {isHovered &&
+      {isHovered && (
         <div
+          ref={containerRef}
           className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis"
           style={{
             background: 'linear-gradient(to top, rgba(20, 20, 20, 0.8) 4%, rgba(1, 1, 1, 0.5) 24%, rgba(1, 1, 1, 0.4) 100%)',
-            maxHeight: '60px', // 최대 높이 설정
-            overflowY: 'auto',  // 세로 스크롤 추가
+            maxHeight: '60px',
+            overflowY: 'auto',
           }}
         >
           {cats.tags.map((tag, index) => (
@@ -56,12 +73,13 @@ export default function SearchImage({ cats }: SearchImageProps) {
               isClickedStyle='bg-white text-[#2f2f2f] h-10 rounded-3xl px-4 py-0 w-auto'
               onClick={() => toggleTag(tag)}
               hover="hover:bg-slate-200 hover:text-[#2f2f2f]"
-              active="active:bg-red-300 hover:text-[#2f2f2f]"
+              active="active:bg-slate-300 hover:text-[#2f2f2f]"
             />
           ))}
+
         </div>
 
-      }
+      )}
     </div>
   );
 }
