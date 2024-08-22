@@ -106,12 +106,10 @@ export default function Header() {
         <p className={`text-[28px] font-bold text-gray-800`}>cataas</p>
       </Link>
       <div
-        // onSubmit={()=>handleSubmit}
         className="flex items-center relative w-1/3">
         <input
           type="text"
           value={selectedTags}
-          // onChange={handleInputChange}
           placeholder="검색어를 입력하세요"
           className="border border-gray-300 rounded-l-lg p-2 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           aria-label="검색어 입력" // 접근성 추가

@@ -1,4 +1,5 @@
 import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
+import { useRouter } from "next/navigation";
 
 interface ButtonTagsProps {
   content: string;
@@ -7,7 +8,7 @@ interface ButtonTagsProps {
   active: string;
   isClickedStyle?: string; // 이미지에서 클릭 스타일
   onClick?: (tag: string) => void; // 클릭 핸들러
-  selectedTags?: string[]; // 선택된 태그 배열
+  isImage?: boolean;
 }
 
 export default function ButtonTags({
@@ -17,9 +18,12 @@ export default function ButtonTags({
   active,
   isClickedStyle,
   onClick,
+  isImage
 }: ButtonTagsProps) {
 
   const { selectedTags, addTag, removeTag } = useSelectedTagsStore();
+
+  const router = useRouter();
 
   // tag가 선택되었는지 판별
   const isClickedTag = selectedTags?.includes(content);
@@ -34,6 +38,14 @@ export default function ButtonTags({
       addTag(tag);
     }
   };
+
+  //태그 단일 검색
+  const searchTag = (tag : string) => {
+    addTag(tag);
+    router.push(`/result?tag=${tag}`);
+
+  }
+
   const className =
     isClickedTag && isClickedStyle
       ? isClickedStyle
@@ -46,7 +58,11 @@ export default function ButtonTags({
       rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
  
       opacity-60 `}
-      onClick={isClickedTag ? undefined : () => toggleTag?.(content)} // 클릭 핸들러 설정
+      onClick={isClickedTag && isImage
+        ? undefined 
+        : isImage 
+        ? () => searchTag?.(content)
+        : () => toggleTag?.(content)} // 클릭 핸들러 설정
     >
       <div className={`flex items-center
 ${className}
