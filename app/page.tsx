@@ -10,11 +10,6 @@ import { useState } from "react";
 
 export default function Home() {
 
-  const { data: tagsData, isLoading: isTagLoading, error: tagError } = useQuery<GetTagsDTO>({
-    queryKey: ['tags-data'], // 쿼리 키
-    queryFn: getTags, // getTags 함수 참조
-  });
-
   const { data: catData, isLoading: isCatLoading, error: catError } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['first-cat-data'], // 쿼리 키
@@ -25,13 +20,8 @@ export default function Home() {
   //검색 모달창
   const [openSearchModal, setSearchModal] = useState<boolean>(false);
 
-  if (isTagLoading && isCatLoading) {
+  if (isCatLoading) {
     return <p>로딩 중</p>;
-  }
-
-  // 각각의 에러를 개별적으로 확인
-  if (tagError) {
-    return <p>태그 데이터 오류 발생: {tagError.message}</p>;
   }
 
   if (catError) {
@@ -40,7 +30,7 @@ export default function Home() {
   return (
     <div className="">
       {/* 검색 헤더 */}
-      <Header openSearchModal={openSearchModal} setSearchModal={setSearchModal} tagsData={tagsData}/>
+      <Header />
       
       {/* 랜덤 검색 결과 */}
       <div className="grid grid-cols-2 gap-4 pt-36 2xl:grid-cols-2 1024:grid-cols-3 md:grid-cols-4
