@@ -25,15 +25,15 @@ export default function Result() {
   );
 
   // 페이징 갯수
-  const [inputValue, setInputValue] = useState<string>(''); 
+  const [inputValue, setInputValue] = useState<string>('');
 
   const handleLimitChange = () => {
     const newLimit = Number(inputValue);
     if (!isNaN(newLimit) && newLimit > 0) {
       setLimit(newLimit);
-      setInputValue(''); 
+      setInputValue('');
     } else {
-      alert('유효한 숫자를 입력하세요.'); 
+      alert('유효한 숫자를 입력하세요.');
     }
   };
 
@@ -44,30 +44,38 @@ export default function Result() {
   if (error instanceof Error) {
     return <p>오류 발생: {error.message}</p>;
   }
-
+  console.log(catData?.cats)
   return (
     <>
       <Header />
-      
-      <h2 className="pt-[140px]">{tag} 의 검색 결과: </h2>
-      <p>보여지는 개수: {limit}</p>
-      <input
-        type="number"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        min={1} // 최소값 설정
-        className="border rounded p-1"
-      />
-      <button onClick={handleLimitChange} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
-        확인
-      </button>
-            <div 
-        className="grid grid-cols-2 gap-4 lg:grid-cols-3 p-2 ">
-        {catData?.cats.map(cat => (
-          <SearchImage cats={cat} />
-        ))}
-      </div>
+      {catData?.cats.length ?
+        <>
+          <h2 className="pt-[140px]">{tag} 의 검색 결과: </h2>
+          <p>보여지는 개수: {limit}</p>
+          <input
+            type="number"
+            value={inputValue ? inputValue : limit}
+            onChange={(e) => setInputValue(e.target.value)}
+            min={1} // 최소값 설정
+            className="border rounded p-1"
+          />
+          <button onClick={handleLimitChange} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
+            확인
+          </button>
+          <div
+            className="grid grid-cols-2 gap-4 lg:grid-cols-3 p-2 ">
+            {catData?.cats.map(cat => (
+              <SearchImage cats={cat} />
+            ))}
+          </div>
 
+
+        </>
+        :
+        <div className="pt-[140px]">
+          고양이 사진이없습니다.
+        </div>
+      }
       {/* skip 이랑 currentPage 는 같음 ! */}
       <Pagination currentPage={skip} setCurrentPage={setSkip} />
     </>

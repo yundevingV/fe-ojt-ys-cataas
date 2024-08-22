@@ -22,7 +22,7 @@ export default function Header() {
   const searchParams = useSearchParams();
 
   const { openSearchModal, setSearchModal } = useSearchModalStore();
-  const { selectedTags, addTag } = useSelectedTagsStore();
+  const { selectedTags, addTag, clearTags } = useSelectedTagsStore();
 
   const router = useRouter();
 
@@ -32,12 +32,6 @@ export default function Header() {
     if (selectedTags) {
       // 태그를 ','로 구분하여 URL로 이동
       router.push(`/result?tag=${selectedTags}`);
-    }
-  };
-
-  const handleKeyPress = (event: any) => {
-    if (event.key === 'Enter') {
-      handleSubmit; // 엔터 키를 눌렀을 때 이동
     }
   };
 
@@ -93,6 +87,10 @@ export default function Header() {
     setRamdomTag(randomTags);
   }, [tagsData])
 
+  const clear = () => {
+    clearTags();
+  }
+
   if (isLoading) {
     return <div>로딩 중...</div>;
   }
@@ -104,7 +102,7 @@ export default function Header() {
   return (
     <div className={`fixed w-full h-[100px] p-5 pr-10 bg-white shadow-md z-10 flex items-center justify-between`}>
 
-      <Link href='/'>
+      <Link href='/' onClick={clear}>
         <p className={`text-[28px] font-bold text-gray-800`}>cataas</p>
       </Link>
       <div
@@ -118,7 +116,6 @@ export default function Header() {
           className="border border-gray-300 rounded-l-lg p-2 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           aria-label="검색어 입력" // 접근성 추가
           onClick={() => setSearchModal(true)}
-          onKeyDown={handleKeyPress}
         />
 
         <CiSearch onClick={() => handleSubmit(selectedTags)} className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
