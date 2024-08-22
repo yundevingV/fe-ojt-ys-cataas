@@ -44,7 +44,7 @@ export default function Result() {
   if (error instanceof Error) {
     return <p>오류 발생: {error.message}</p>;
   }
-  console.log(catData?.cats)
+  
   return (
     <>
       <Header />

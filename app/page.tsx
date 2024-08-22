@@ -29,8 +29,7 @@ export default function Home() {
       <Header />
       
       {/* 랜덤 검색 결과 */}
-      <div className="grid grid-cols-2 gap-4 pt-36 2xl:grid-cols-2 1024:grid-cols-3 md:grid-cols-4
-      p-2">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 pt-36 p-2">
 
         {catData?.cats.map(cat => (
           <SearchImage key={cat._id} cats={cat} />
