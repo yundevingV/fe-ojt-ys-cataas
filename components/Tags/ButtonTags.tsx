@@ -1,12 +1,9 @@
-import Link from "next/link";
-
 interface ButtonTagsProps {
   content: string;
   textColor?: string;
   hover: string;
   active: string;
-  onClick?: () => void; // 클릭 핸들러
-  deleteTag?: (tag?: string) => void; // 선택적 삭제 핸들러
+  onClick?: (tag : string) => void; // 클릭 핸들러
   selectedTags?: string[]; // 선택된 태그 배열
 }
 
@@ -16,7 +13,6 @@ export default function ButtonTags({
   hover,
   active,
   onClick,
-  deleteTag, 
   selectedTags,
 }: ButtonTagsProps) {
 
@@ -26,9 +22,10 @@ export default function ButtonTags({
   return (
     <button
       className={`w-auto flex-row h-10 px-4 py-0 cursor-pointer font-semibold items-center border-2 border-transparent	
-      rounded-3xl ${textColor} ${hover} ${active}
+      rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '') } ${!isClickedTag && (active ? active : '')}
+ 
       opacity-60 `}
-      onClick={isClickedTag ? undefined : onClick} // 클릭 핸들러 설정
+      onClick={isClickedTag ? undefined : ()=>onClick?.(content)} // 클릭 핸들러 설정
     >
       <div className={`flex items-center
         ${isClickedTag ? 'h-10 bg-slate-200 border-2 border-sky-400 rounded-3xl px-4 py-0 w-auto' : ''}
@@ -37,7 +34,7 @@ export default function ButtonTags({
         {isClickedTag && (
           <p 
             className="ml-2 cursor-pointer text-red-600"
-            onClick={onClick} // handleDelete를 직접 사용
+            onClick={()=>onClick?.(content)} 
           >
             x
           </p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ButtonTags from "./ButtonTags";
 
 interface ButtonTagsBoxProps {
@@ -28,10 +28,9 @@ export default function ButtonTagsBox({ randomTags, setSelectedTags, selectedTag
         <ButtonTags
           key={index}
           content={tag}
-          hover="hover:bg-slate-200"
+          hover="hover:bg-slate-200 hover:border-sky-300"
           active="active:bg-slate-300"
-          onClick={() => toggleTag(tag)} // 클릭 시 핸들러 호출
-          // deleteTag={() => deleteTag(tag)}
+          onClick={() => toggleTag(tag)} 
           selectedTags={selectedTags}
         />
       ))}

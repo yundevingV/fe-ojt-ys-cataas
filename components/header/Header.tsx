@@ -12,7 +12,7 @@ import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
 
 export default function Header() {
 
-  const { data: tagsData, isLoading: isTagLoading, error: tagError } = useQuery<GetTagsDTO>({
+  const { data: tagsData, isLoading, error } = useQuery<GetTagsDTO>({
     queryKey: ['tags-data'], // 쿼리 키
     queryFn: getTags, // getTags 함수 참조
   });
@@ -80,8 +80,9 @@ export default function Header() {
   // tag가 undefined일 경우 빈 배열로 처리
   const prevTagArray = tag ? tag.split(',') : [];
 
+  // 기존 검색어 배열 저장
   useEffect(() => {
-    setSelectedTags(prevTagArray); // 배열을 그대로 전달
+    setSelectedTags(prevTagArray);
   }, [tag]);
 
   useEffect(() => {
