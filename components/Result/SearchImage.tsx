@@ -11,7 +11,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const [,setSelectedTags] = useState<string[]>([]);
+  const [, setSelectedTags] = useState<string[]>([]);
 
   // 태그 클릭 핸들러
   const toggleTag = (tag: string) => {
@@ -42,8 +42,11 @@ export default function SearchImage({ cats }: SearchImageProps) {
       {isHovered &&
         <div
           className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis"
-          style={{ background: 'linear-gradient(to top, rgba(20, 20, 20, 0.8) 4%, rgba(1, 1, 1, 0.5) 24%, rgba(1, 1, 1, 0.4) 100%)' }}
-
+          style={{
+            background: 'linear-gradient(to top, rgba(20, 20, 20, 0.8) 4%, rgba(1, 1, 1, 0.5) 24%, rgba(1, 1, 1, 0.4) 100%)',
+            maxHeight: '60px', // 최대 높이 설정
+            overflowY: 'auto',  // 세로 스크롤 추가
+          }}
         >
           {cats.tags.map((tag, index) => (
             <ButtonTags
@@ -51,11 +54,13 @@ export default function SearchImage({ cats }: SearchImageProps) {
               content={tag}
               textColor="text-[#fff]"
               isClickedStyle='bg-white text-[#2f2f2f] h-10 rounded-3xl px-4 py-0 w-auto'
-              onClick={()=>toggleTag(tag)}
+              onClick={() => toggleTag(tag)}
               hover="hover:bg-slate-200 hover:text-[#2f2f2f]"
-              active="active:bg-red-300 hover:text-[#2f2f2f]" />
+              active="active:bg-red-300 hover:text-[#2f2f2f]"
+            />
           ))}
         </div>
+
       }
     </div>
   );
