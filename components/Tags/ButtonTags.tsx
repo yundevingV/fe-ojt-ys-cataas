@@ -20,13 +20,6 @@ export default function ButtonTags({
   selectedTags,
 }: ButtonTagsProps) {
 
-  const handleDelete = (event: React.MouseEvent) => {
-    event.stopPropagation(); // 클릭 이벤트 전파 중지
-    if (deleteTag) {
-      deleteTag(); // delete가 존재할 때만 호출
-    }
-  };
-
   // tag가 선택되었는지 판별
   const isClickedTag = selectedTags?.includes(content);
 
@@ -44,7 +37,7 @@ export default function ButtonTags({
         {isClickedTag && (
           <p 
             className="ml-2 cursor-pointer text-red-600"
-            onClick={handleDelete} // handleDelete를 직접 사용
+            onClick={onClick} // handleDelete를 직접 사용
           >
             x
           </p>
