@@ -16,12 +16,15 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
 
   const handleCurrentPage = (option: string | number) => {
     if (typeof (option) === 'number') {
+      window.scrollTo(0,0)
       setCurrentPage(option)
     }
     else if (option === 'next') {
+      window.scrollTo(0,0)
       setCurrentPage(currentPage + 1)
     }
     else if (option === 'prev') {
+      window.scrollTo(0,0)
       setCurrentPage(currentPage - 1)
     }
   }
