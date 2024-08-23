@@ -5,16 +5,18 @@ import Header from "@/components/header/Header";
 import Pagination from "@/components/Result/Pagination";
 import SearchImage from "@/components/Result/SearchImage";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation"; // 쿼리 파라미터를 가져오기 위해 추가
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation"; // 쿼리 파라미터를 가져오기 위해 추가
+import { useEffect, useState } from "react";
 
 export default function Result() {
   const searchParams = useSearchParams();
 
   const tag = searchParams.get("tag"); // 쿼리 파라미터에서 tag 가져오기
 
-  const [limit, setLimit] = useState<number>(10);
-  const [skip, setSkip] = useState<number>(0);
+  const router = useRouter();
+  
+  const [limit, setLimit] = useState<number>(Number(searchParams.get("limit")));
+  const [skip, setSkip] = useState<number>(Number(searchParams.get("skip")));
 
   const { data: catData, isLoading, error } = useQuery<GetCatsDTO, Error>(
     {
@@ -23,6 +25,11 @@ export default function Result() {
       enabled: !!tag, // tag가 있을 때만 쿼리 실행
     }
   );
+
+  useEffect(()=>{
+    router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip}`);
+
+  },[limit])
 
   // 페이징 갯수
   const [inputValue, setInputValue] = useState<string>('');

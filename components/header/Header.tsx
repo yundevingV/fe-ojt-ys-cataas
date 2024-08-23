@@ -25,8 +25,11 @@ export default function Header() {
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (selectedTags: string[]) => {
-    if (selectedTags) {
-      router.push(`/result?tag=${selectedTags}`);
+    if (selectedTags.length) {
+      router.push(`/result?tag=${selectedTags}&limit=${10}&skip=${0}`);
+    }
+    else {
+      alert('검색할 태그를 지정해주세요 ! ')
     }
   };
 
