@@ -11,79 +11,81 @@ import { useEffect, useState } from "react";
 export default function Result() {
   const searchParams = useSearchParams();
 
-  const tag = searchParams.get("tag"); // 쿼리 파라미터에서 tag 가져오기
+  const tag = searchParams.get("tag"); // 쿼리 파라미터에서 'tag' 가져오기
 
   const router = useRouter();
-  
+
   const [limit, setLimit] = useState<number>(Number(searchParams.get("limit")));
   const [skip, setSkip] = useState<number>(Number(searchParams.get("skip")));
 
   const { data: catData, isLoading, error } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['cat-data', limit, skip, tag], // 쿼리 키
-      queryFn: () => getCats({ limit: limit, skip: skip * limit, tag: tag }), // getCats 함수에 태그를 전달합니다.
-      enabled: !!tag, // tag가 있을 때만 쿼리 실행
+      queryFn: () => getCats({ limit: limit, skip: skip * limit, tag: tag }), // getCats 함수에 태그와 페이지 정보를 전달합니다.
+      enabled: !!tag, // 'tag'가 있을 때만 쿼리 실행
     }
   );
 
-  useEffect(()=>{
-    router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip}`);
+  useEffect(() => {
+    router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip}`); // URL 업데이트
+  }, [limit]);
 
-  },[limit])
-
-  // 페이징 갯수
-  const [inputValue, setInputValue] = useState<string>('');
-
-  const handleLimitChange = () => {
-    const newLimit = Number(inputValue);
-    if (!isNaN(newLimit) && newLimit > 0) {
-      setLimit(newLimit);
-      setInputValue('');
-    } else {
-      alert('유효한 숫자를 입력하세요.');
-    }
-  };
-
+  const handleBack = () => {
+    router.back()
+  }
   if (isLoading) {
-    return <p>로딩 중</p>;
+    return <p>로딩 중...</p>; // 로딩 상태 표시
   }
 
   if (error instanceof Error) {
-    return <p>오류 발생: {error.message}</p>;
+    return <p>오류 발생: {error.message}</p>; // 오류 메시지 표시
   }
-  
+
   return (
     <>
       <Header />
-      {catData?.cats.length ?
+      {catData?.cats.length ? (
         <>
-          <h2 className="pt-[140px]">{tag} 의 검색 결과: </h2>
-          <p>보여지는 개수: {limit}</p>
-          <input
-            type="number"
-            value={inputValue ? inputValue : limit}
-            onChange={(e) => setInputValue(e.target.value)}
-            min={1} // 최소값 설정
-            className="border rounded p-1"
-          />
-          <button onClick={handleLimitChange} className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
-            확인
-          </button>
-          <div
-            className="grid grid-cols-2 gap-4 lg:grid-cols-3 p-2 ">
+          <h2 className="px-5 pt-[140px]">
+            {tag}의
+            <select
+              value={limit}
+              onChange={(e) => {
+                const newValue = Number(e.target.value);
+                setLimit(newValue); // limit 업데이트
+              }}
+              className="border rounded"
+            >
+              개
+              {/* 1부터 30까지의 페이지 갯수 옵션 설정 */}
+              {[...Array(30)].map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select> 개 의 검색 결과:</h2>
+
+
+
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 p-2">
             {catData?.cats.map(cat => (
-              <SearchImage cats={cat} />
+              <SearchImage key={cat._id} cats={cat} /> // 각 고양이 사진에 키 추가
             ))}
           </div>
-
-
         </>
-        :
-        <div className="pt-[140px]">
-          고양이 사진이없습니다.
+      ) : (
+        <div className="pt-[140px] flex-col justify-center items-center text-center space-y-5">
+          <p className="text-2xl">"{tag}"로 검색된 고양이 사진이 없습니다.</p>
+          <p 
+            className="text-xl"
+            onClick={handleBack}
+            >
+              이전페이지로
+        </p>
         </div>
-      }
-      {/* skip 이랑 currentPage 는 같음 ! */}
+
+      )}
+      {/* 페이징 컴포넌트 */}
       <Pagination currentPage={skip} setCurrentPage={setSkip} />
     </>
   );
