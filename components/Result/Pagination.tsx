@@ -3,6 +3,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
+import { FaAnglesLeft } from "react-icons/fa6";
+import { FaAnglesRight } from "react-icons/fa6";
 
 interface PaginationProps {
   currentPage: number;
@@ -45,12 +47,25 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
     } else if (option === 'prev') {
       window.scrollTo(0, 0);
       setCurrentPage(currentPage - 1);
+    } else if (option === 'prevPerPage') {
+      window.scrollTo(0, 0);
+      setCurrentPage(currentPage - 10);
+    } else if (option === 'nextPerPage') {
+      window.scrollTo(0, 0);
+      setCurrentPage(currentPage + 10);
     }
   };
 
   const buttonPaddingStyle = `px-2 py-1`;
   return (
     <div className="flex items-center justify-center mt-4 ">
+      <button
+        onClick={() => handleCurrentPage('prevPerPage')}
+        disabled={currentPage < 10}
+        className={`${buttonPaddingStyle} mx-1 rounded text-[#000] hover:bg-slate-200 active:bg-slate-300}`}
+      >
+        <FaAnglesLeft />
+      </button>
       <button
         onClick={() => handleCurrentPage('prev')}
         disabled={currentPage === 0}
@@ -77,6 +92,12 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
         className={`${buttonPaddingStyle} mx-1 rounded text-[#000] hover:bg-slate-200 active:bg-slate-300`}
       >
         <FaAngleRight />
+      </button>
+      <button
+        onClick={() => handleCurrentPage('nextPerPage')}
+        className={`${buttonPaddingStyle} mx-1 rounded text-[#000] hover:bg-slate-200 active:bg-slate-300}`}
+      >
+        <FaAnglesRight />
       </button>
     </div>
   );
