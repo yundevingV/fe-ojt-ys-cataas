@@ -6,35 +6,32 @@ import { CiSearch } from "react-icons/ci";
 import { GrPowerReset } from "react-icons/gr";
 import getRandomItems from "@/util/getRandomItems";
 import ButtonTagsBox from "../Tags/ButtonTagsBox";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
+import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
+import Link from "next/link";
 
 export default function Header() {
 
-  const { data: tagsData, isLoading: isTagLoading, error: tagError } = useQuery<GetTagsDTO>({
+  const { data: tagsData, isLoading, error } = useQuery<GetTagsDTO>({
     queryKey: ['tags-data'], // 쿼리 키
     queryFn: getTags, // getTags 함수 참조
   });
 
+  const searchParams = useSearchParams();
+
   const { openSearchModal, setSearchModal } = useSearchModalStore();
+  const { selectedTags, addTag, clearTags } = useSelectedTagsStore();
 
   const router = useRouter();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]); // 선택된 태그 배열 상태
   const modalRef = useRef<HTMLDivElement>(null); // 모달 참조
 
-  const handleSubmit = (selectedTags : string[]) => {
-    // 여기서 검색 처리 로직을 추가할 수 있습니다.
+  const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags) {
       // 태그를 ','로 구분하여 URL로 이동
-      router.push(`/result/?q=${selectedTags}`);
-    }
-  };
-
-  const handleKeyPress = (event : any) => {
-    if (event.key === 'Enter') {
-      handleSubmit; // 엔터 키를 눌렀을 때 이동
+      router.push(`/result?tag=${selectedTags}`);
     }
   };
 
@@ -72,31 +69,54 @@ export default function Header() {
     setRamdomTag(refreshTags)
   }
 
+  // 쿼리 파라미터에서 tag 가져오기
+  const tag = searchParams.get("q");
+
+  // tag가 undefined일 경우 빈 배열로 처리
+  const prevTagArray = tag ? tag.split(',') : [];
+
+  // 기존 검색어 배열 저장
+  useEffect(() => {
+    prevTagArray.forEach(tag => {
+      addTag(tag); // 각 태그를 상태에 추가
+    });
+  }, [tag, addTag]); // tag가 변경될 때마다 실행
+
   useEffect(() => {
     const randomTags = tagsData ? getRandomItems(tagsData, 10) : []; // 랜덤으로 10개 선택
-    setRamdomTag(randomTags)
+    setRamdomTag(randomTags);
   }, [tagsData])
 
+  const clear = () => {
+    clearTags();
+  }
+
+  if (isLoading) {
+    return <div>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div>오류 발생: {error.message}</div>;
+  }
 
   return (
     <div className={`fixed w-full h-[100px] p-5 pr-10 bg-white shadow-md z-10 flex items-center justify-between`}>
-      <p className={`text-[28px] font-bold text-gray-800`}>cataas</p>
 
+      <Link href='/' onClick={clear}>
+        <p className={`text-[28px] font-bold text-gray-800`}>cataas</p>
+      </Link>
       <div
-        // onSubmit={()=>handleSubmit}
         className="flex items-center relative w-1/3">
         <input
           type="text"
           value={selectedTags}
-          // onChange={handleInputChange}
           placeholder="검색어를 입력하세요"
           className="border border-gray-300 rounded-l-lg p-2 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
           aria-label="검색어 입력" // 접근성 추가
           onClick={() => setSearchModal(true)}
-          onKeyDown={handleKeyPress}
         />
 
-        <CiSearch onClick={()=>handleSubmit(selectedTags)} className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
+        <CiSearch onClick={() => handleSubmit(selectedTags)} className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
 
         {openSearchModal && (
           <>
@@ -107,7 +127,7 @@ export default function Header() {
                 <div className="">
                   <h3 className="text-lg font-semibold">선택된 태그 </h3>
                   <div className="flex">
-                      <ButtonTagsBox randomTags={selectedTags} setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
+                    <ButtonTagsBox tag={selectedTags} />
                   </div>
                 </div>
               }
@@ -124,9 +144,9 @@ export default function Header() {
               </div>
 
               <div className="flex flex-wrap space-x-2">
-                {randomTags && <ButtonTagsBox randomTags={randomTags} setSelectedTags={setSelectedTags} />}
+                {randomTags && <ButtonTagsBox tag={randomTags} />}
               </div>
-              
+
             </div>
           </>
         )}
