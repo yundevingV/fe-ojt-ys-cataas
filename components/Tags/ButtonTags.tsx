@@ -49,7 +49,7 @@ export default function ButtonTags({
     isClickedTag && isClickedStyle
       ? isClickedStyle
       : isClickedTag
-        ? 'h-10 bg-slate-200 border-2 border-sky-400 rounded-3xl px-4 py-0 w-auto'
+        ? 'h-10 bg-slate-200 border-2 bg-sky-300 rounded-3xl px-4 py-0 w-auto text-[#000]'
         : '';
   return (
     <button

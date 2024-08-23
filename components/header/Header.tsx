@@ -107,13 +107,20 @@ export default function Header() {
           {openSearchModal && (
             <>
               <div className="fixed inset-0 z-0"></div>
-              <div ref={modalRef} className="absolute top-12 p-2 h-auto bg-slate-100 z-10 w-full">
+              <div ref={modalRef} className="absolute top-12 p-4 h-auto bg-white z-10 w-full">
                 {selectedTags && (
                   <div>
                     <h3 className="text-lg font-semibold">선택된 태그 </h3>
-                    <div className="flex">
-                      <ButtonTagsBox tag={selectedTags} />
-                    </div>
+                    {selectedTags.length ?
+                      <div className="flex p-2">
+                        <ButtonTagsBox tag={selectedTags} />
+                      </div>
+                      :
+                      <div className="flex justify-center p-4">
+                        선택된 태그가 없습니다.
+                      </div>
+                    }
+
                   </div>
                 )}
                 <div className="flex justify-between">
