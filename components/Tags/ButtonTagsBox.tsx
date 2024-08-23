@@ -9,7 +9,7 @@ interface ButtonTagsBoxProps {
 export default function ButtonTagsBox({ tag }: ButtonTagsBoxProps) {
 
   return (
-    <div className="flex flex-wrap w-full">
+    <div className="flex flex-wrap w-full ">
       {tag.map((tag, index) => (
         <ButtonTags
           key={index}

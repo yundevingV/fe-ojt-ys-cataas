@@ -24,7 +24,6 @@ export default function ButtonTags({
 }: ButtonTagsProps) {
 
   const { selectedTags, addTag, removeTag, clearTags } = useSelectedTagsStore();
-
   const router = useRouter();
 
   // tag가 선택되었는지 판별
@@ -41,7 +40,7 @@ export default function ButtonTags({
     }
   };
 
-  //태그 단일 검색
+  // 태그 단일 검색
   const searchTag = (tag: string) => {
     clearTags();
     addTag(tag);
@@ -52,13 +51,14 @@ export default function ButtonTags({
     isClickedTag && isImageClickedStyle
       ? isImageClickedStyle
       : isClickedTag
-        ? 'h-10 bg-sky-300 rounded-3xl px-4 py-0 w-auto text-[#000]'
+        ? 'h-10 bg-amber-400 rounded-3xl px-4 py-0 w-auto text-[#000]'
         : '';
+
   return (
     <button
-      className={`w-auto flex-row h-10 ${isClickedTag ? 'px-1' : 'px-4'}  py-0 cursor-pointer font-semibold items-center border-transparent	
+      className={`w-auto flex-row h-10 ${isClickedTag ? 'px-1' : 'px-4'}  py-0 cursor-pointer items-center border-transparent
       rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
-      ${isDetail && 'bg-sky-300 mr-2 mb-2'} opacity-60 `}
+      ${isDetail && 'bg-amber-400 mr-2 mb-2'} opacity-60 mb-1`}
       onClick={isClickedTag && isImage
         ? undefined
         : isImage
@@ -66,11 +66,11 @@ export default function ButtonTags({
           : () => toggleTag?.(content)} // 클릭 핸들러 설정
       disabled={isDetail}
     >
-      <div className={`flex items-center ${className}`}>
+      <div className={`flex items-center ${className} `}>
         {content}
         {isClickedTag && !(isDetail === true) && (
           <p
-            className="ml-2 cursor-pointer text-red-600"
+            className="ml-2 cursor-pointer text-red-500"
             onClick={() => toggleTag?.(content)}
           >
             x
