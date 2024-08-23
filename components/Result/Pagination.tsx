@@ -1,3 +1,4 @@
+import useWindowSize from '@/hooks/useWindowSize';
 import React, { useEffect, useState } from 'react';
 
 interface PaginationProps {
@@ -7,10 +8,22 @@ interface PaginationProps {
 // 모바일일 페이지되는 갯수를 해서 / 10을 변수로 바꾸자 !
 export default function Pagination({ currentPage, setCurrentPage }: PaginationProps) {
   const [startPage, setStartPage] = useState<number>(0);
+  const [buttonPerPage,setButtonPerPage] = useState<number>(10);
+
+  const windowSize = useWindowSize();
+
+  useEffect(()=>{
+    if(windowSize.width > 768){
+      setButtonPerPage(10)
+    }
+    else if (windowSize.width <= 768){
+      setButtonPerPage(5)
+    }
+  },[windowSize.width])
 
   useEffect(() => {
-    setStartPage(Math.floor(currentPage / 10)); // 나눗셈 버림
-  }, [currentPage]);
+    setStartPage(Math.floor(currentPage / buttonPerPage)); // 나눗셈 버림
+  }, [currentPage,buttonPerPage]);
 
   const handleCurrentPage = (option: string | number) => {
     if (typeof option === 'number') {
@@ -25,27 +38,6 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
     }
   };
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      // 미디어 쿼리를 사용하여 화면 크기 체크
-      const mobile = window.matchMedia("(max-width: 768px)").matches;
-      setIsMobile(mobile);
-    };
-
-    // 초기 체크
-    handleResize();
-
-    // 이벤트 리스너 등록
-    window.addEventListener('resize', handleResize);
-
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   return (
     <div className="flex justify-center mt-4">
       <button
@@ -56,13 +48,13 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
         이전
       </button>
 
-      {Array.from({ length: isMobile ? 5 : 10 }, (_, index) => (
+      {Array.from({ length: buttonPerPage }, (_, index) => (
         <button
-          key={(startPage * 10) + index} // 시작 페이지를 기준으로 키 설정
-          onClick={() => handleCurrentPage((startPage * 10) + index)} // 클릭 시 현재 페이지 설정
-          className={`px-4 py-2 mx-1 rounded ${currentPage === (startPage * 10) + index ? 'bg-blue-700 text-white' : 'bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white'}`}
+          key={(startPage * buttonPerPage) + index} // 시작 페이지를 기준으로 키 설정
+          onClick={() => handleCurrentPage((startPage * buttonPerPage) + index)} // 클릭 시 현재 페이지 설정
+          className={`px-4 py-2 mx-1 rounded ${currentPage === (startPage * buttonPerPage) + index ? 'bg-blue-700 text-white' : 'bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white'}`}
         >
-          {(startPage * 10) + index + 1}
+          {(startPage * buttonPerPage) + index + 1}
         </button>
       ))}
 
