@@ -1,6 +1,8 @@
 import useWindowSize from '@/hooks/useWindowSize';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { FaAngleRight } from "react-icons/fa6";
+import { FaAngleLeft } from "react-icons/fa6";
 
 interface PaginationProps {
   currentPage: number;
@@ -46,21 +48,25 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
     }
   };
 
+  const buttonPaddingStyle = `px-2 py-1`;
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex items-center justify-center mt-4 ">
       <button
         onClick={() => handleCurrentPage('prev')}
         disabled={currentPage === 0}
-        className={`px-4 py-2 mx-1 rounded ${currentPage === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+        className={`${buttonPaddingStyle} mx-1 rounded text-[#000] hover:bg-slate-200 active:bg-slate-300}`}
       >
-        이전
+        <FaAngleLeft />
       </button>
 
       {Array.from({ length: buttonPerPage }, (_, index) => (
         <button
           key={(startPage * buttonPerPage) + index} // 시작 페이지를 기준으로 키 설정
           onClick={() => handleCurrentPage((startPage * buttonPerPage) + index)} // 클릭 시 현재 페이지 설정
-          className={`px-4 py-2 mx-1 rounded ${currentPage === (startPage * buttonPerPage) + index ? 'bg-blue-700 text-white' : 'bg-gray-200 text-gray-800 hover:bg-blue-500 hover:text-white'}`}
+          className={`${buttonPaddingStyle} items-center mx-1 rounded 
+          ${currentPage === (startPage * buttonPerPage) + index && 'bg-blue-600 text-white'} 
+          hover:bg-slate-200 active:bg-slate-300
+          `}
         >
           {(startPage * buttonPerPage) + index + 1}
         </button>
@@ -68,9 +74,9 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
 
       <button
         onClick={() => handleCurrentPage('next')}
-        className={`px-4 py-2 mx-1 rounded bg-blue-500 text-white`}
+        className={`${buttonPaddingStyle} mx-1 rounded text-[#000] hover:bg-slate-200 active:bg-slate-300`}
       >
-        다음
+        <FaAngleRight />
       </button>
     </div>
   );
