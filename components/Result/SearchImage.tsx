@@ -70,7 +70,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
               key={index}
               content={tag}
               textColor="text-[#fff]"
-              isClickedStyle='bg-white text-[#2f2f2f] h-10 rounded-3xl px-4 py-0 w-auto'
+              isImageClickedStyle='bg-white text-[#2f2f2f] h-10 rounded-3xl px-4 py-0 w-auto'
               onClick={() => toggleTag(tag)}
               isImage={true}
               hover="hover:bg-slate-200 hover:text-[#2f2f2f]"

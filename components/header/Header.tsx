@@ -87,12 +87,12 @@ export default function Header() {
   }
 
   return (
-    <div className="fixed w-full h-[100px] p-5 pr-10 bg-white shadow-md z-10 flex items-center justify-center">
-      <div className="flex-col items-center justify-center w-full max-w-3xl">
+    <div className="fixed w-full h-[100px]  bg-white shadow-md z-10 flex items-center justify-center">
+      <div className="flex-col items-center justify-center w-full max-w-2xl ">
         <Link className={`text-[28px] font-bold text-gray-800 text-center`} href='/' onClick={clear}>
           <p>cataas</p>
         </Link>
-        <div className="flex items-center relative mx-4">
+        <div className="flex justify-center items-center relative w-2/3 mx-auto">
           <input
             type="text"
             value={selectedTags}
@@ -102,7 +102,9 @@ export default function Header() {
             onClick={() => setSearchModal(true)}
           />
 
-          <CiSearch onClick={() => handleSubmit(selectedTags)} className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
+          <CiSearch 
+            onClick={() => handleSubmit(selectedTags)} 
+            className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
 
           {openSearchModal && (
             <>
