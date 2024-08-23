@@ -58,7 +58,7 @@ export default function ButtonTags({
     <button
       className={`w-auto flex-row h-10 ${isClickedTag ? 'px-1' : 'px-4'}  py-0 cursor-pointer items-center border-transparent
       rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
-      ${isDetail && 'bg-amber-400 mr-2 mb-2'} opacity-60 mb-1`}
+      ${isDetail && 'bg-amber-400 mr-2 mb-2'} opacity-60 mb-1 `}
       onClick={isClickedTag && isImage
         ? undefined
         : isImage

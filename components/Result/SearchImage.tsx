@@ -51,14 +51,14 @@ export default function SearchImage({ cats }: SearchImageProps) {
         <img
           src={`https://cataas.com/cat/${cats._id}`}
           alt="고양이 이미지"
-          className="aspect-square rounded-lg"
+          className="aspect-square rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-[1.03]" // 애니메이션 클래스 추가
         />
       </Link>
 
       {isHovered && (
         <div
           ref={containerRef}
-          className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis"
+          className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis  "
           style={{
             background: 'linear-gradient(to top, rgba(20, 20, 20, 0.8) 4%, rgba(1, 1, 1, 0.5) 24%, rgba(1, 1, 1, 0.4) 100%)',
             maxHeight: '60px',
