@@ -42,8 +42,7 @@ export default function ButtonTags({
   //태그 단일 검색
   const searchTag = (tag : string) => {
     addTag(tag);
-    router.push(`/result?tag=${tag}`);
-
+    router.push(`/result?tag=${tag}&limit=${10}&skip=${0}`);
   }
 
   const className =
@@ -56,7 +55,7 @@ export default function ButtonTags({
     <button
       className={`w-auto flex-row h-10 px-4 py-0 cursor-pointer font-semibold items-center border-2 border-transparent	
       rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
- 
+
       opacity-60 `}
       onClick={isClickedTag && isImage
         ? undefined 
