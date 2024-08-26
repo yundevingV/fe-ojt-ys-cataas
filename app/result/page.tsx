@@ -72,12 +72,15 @@ export default function Result() {
           </div>
         </>
       ) : (
-        <div className="pt-[140px] flex-col justify-center items-center text-center space-y-5">
+        <div className="pt-[140px] mb-[50%] justify-center items-center text-center space-y-5">
           <p className="text-2xl">" {tag} "로 검색된 고양이 사진이 없습니다.</p>
         </div>
       )}
+      {/* ${catData?.cats.length ? '' : 'fixed bottom-0 left-0 right-0'} */}
       {/* 페이징 컴포넌트 */}
-      <Pagination currentPage={skip} setCurrentPage={setSkip} />
+      <div className={`sticky `}>
+        <Pagination currentPage={skip} setCurrentPage={setSkip} />
+      </div>
     </>
   );
 }
