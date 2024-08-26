@@ -37,7 +37,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
       className="relative cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ height: '400px', overflowY: 'hidden' }} // 초기 높이 설정
+            style={{ height: '400px', overflowY: 'hidden' }} // 초기 높이 설정
 
     >
       {isVisible ? (
@@ -50,7 +50,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
         </Link>
       ) : null}
 
-      {/* {isHovered && (
+      {isHovered && (
         <div
           ref={containerRef}
           className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis"
@@ -73,7 +73,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
             />
           ))}
         </div>
-      )} */}
+      )}
 
     </div>
   );
