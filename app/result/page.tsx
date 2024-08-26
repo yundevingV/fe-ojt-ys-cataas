@@ -63,7 +63,7 @@ export default function Result() {
 
             </select> 개 의 검색 결과</h1>
 
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 p-2">
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 px-8">
             {catData?.cats.map(cat => (
               <SearchImage key={cat._id} cats={cat} /> // 각 고양이 사진에 키 추가
             ))}
