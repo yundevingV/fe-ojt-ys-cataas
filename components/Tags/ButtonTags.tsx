@@ -54,7 +54,8 @@ export default function ButtonTags({
       : isClickedTag
         ? 'h-10 bg-amber-400 rounded-3xl px-4 py-0 w-auto text-[#000] '
         // 아무것도 없는 태그들 css
-        : 'border-[#2f2f2f] border-2 px-4 py-1 rounded-3xl';
+        : `border-[${isImageClickedStyle ? '#fff' : '#2f2f2f' }]
+           border-2 px-4 py-1 rounded-3xl`;
 
   return (
     <button
