@@ -14,7 +14,7 @@ export default function ButtonTagsBox({ tag }: ButtonTagsBoxProps) {
         <ButtonTags
           key={index}
           content={tag}
-          hover="hover:bg-slate-200 hover:border-sky-300"
+          hover="hover:bg-slate-200 "
           active="active:bg-slate-300"
         />
       ))}
