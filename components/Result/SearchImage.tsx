@@ -2,7 +2,7 @@ import { CatDTO } from "@/api/cats/getCats";
 import ButtonTags from "@/components/Tags/ButtonTags";
 import useLazyLoad from "@/hooks/useLazyLoad";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 export interface SearchImageProps {
   cats: CatDTO;
@@ -31,7 +31,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    
+
     <div
       ref={ref}
       className={`relative cursor-pointer ${isVisible ? '' : 'h-[400px]'}`}
@@ -51,14 +51,14 @@ export default function SearchImage({ cats }: SearchImageProps) {
       {isHovered && (
         <div
           ref={containerRef}
-          className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis"
+          className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis flex "
           style={{
             background: 'linear-gradient(to top, rgba(20, 20, 20, 0.8) 4%, rgba(1, 1, 1, 0.5) 24%, rgba(1, 1, 1, 0.4) 100%)',
             maxHeight: '60px',
             overflowY: 'auto',
           }}
         >
-          {cats.tags.map((tag, index) => (
+          {cats.tags.slice(0, 3).map((tag, index) => (
             <ButtonTags
               key={index}
               content={tag}
@@ -70,9 +70,16 @@ export default function SearchImage({ cats }: SearchImageProps) {
               active="active:bg-slate-300 hover:text-[#2f2f2f]"
             />
           ))}
+          {cats.tags.length > 3 &&
+            <Link href={`/detail/${cats._id}`}>
+              <p
+                className="text-[#fff] h-10 flex justify-center items-center ml-3 cursor-pointer">
+                더 보기
+              </p>
+            </Link>
+          }
         </div>
       )}
-
     </div>
   );
 }
