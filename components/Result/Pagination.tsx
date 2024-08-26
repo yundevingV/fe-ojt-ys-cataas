@@ -58,7 +58,7 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
 
   const buttonPaddingStyle = `px-2 py-1`;
   return (
-    <div className="flex items-center justify-center mt-4 ">
+    <div className="flex items-center justify-center mt-4 pb-5">
       <button
         onClick={() => handleCurrentPage('prevPerPage')}
         disabled={currentPage < 10}
