@@ -27,6 +27,7 @@ export default function Header() {
 
   const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags.length) {
+      setSearchModal(false)
       router.push(`/result?tag=${selectedTags}&limit=${10}&skip=${0}`);
     }
     else {
@@ -101,6 +102,11 @@ export default function Header() {
             className="border border-gray-300 rounded-lg p-2 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="검색어 입력"
             onClick={() => setSearchModal(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSubmit(selectedTags);
+              }
+            }}
           />
 
           <CiSearch
