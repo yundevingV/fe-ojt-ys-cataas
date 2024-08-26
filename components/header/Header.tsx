@@ -25,6 +25,8 @@ export default function Header() {
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
 
+
+
   const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags.length) {
       setSearchModal(false)
@@ -34,6 +36,21 @@ export default function Header() {
       alert('검색할 태그를 지정해주세요 ! ')
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event : any) => {
+      if (event.key === 'Enter') {
+        handleSubmit(selectedTags); // 엔터 키가 눌리면 검색 실행
+      }
+    };
+
+    const modalElement = modalRef.current;
+    modalElement?.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      modalElement?.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedTags]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -115,7 +132,11 @@ export default function Header() {
 
           {openSearchModal && (
             <>
-              <div className="fixed inset-0 z-0 bg-black bg-opacity-20" />
+              <div 
+                ref={modalRef}
+                className="fixed inset-0 z-0 bg-black bg-opacity-20" 
+                tabIndex={0}
+                />
               <div
                 ref={modalRef} 
                 className="absolute top-14 p-6 h-auto bg-white z-10 w-full rounded-2xl
