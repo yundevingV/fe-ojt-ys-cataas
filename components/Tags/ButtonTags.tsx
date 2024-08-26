@@ -6,9 +6,10 @@ interface ButtonTagsProps {
   textColor?: string;
   hover: string;
   active: string;
-  isClickedStyle?: string; // 이미지에서 클릭 스타일
+  isImageClickedStyle?: string; // 이미지에서 클릭 스타일
   onClick?: (tag: string) => void; // 클릭 핸들러
   isImage?: boolean;
+  isDetail?: boolean;
 }
 
 export default function ButtonTags({
@@ -16,13 +17,13 @@ export default function ButtonTags({
   textColor,
   hover,
   active,
-  isClickedStyle,
+  isImageClickedStyle,
   onClick,
-  isImage
+  isImage,
+  isDetail
 }: ButtonTagsProps) {
 
-  const { selectedTags, addTag, removeTag } = useSelectedTagsStore();
-
+  const { selectedTags, addTag, removeTag, clearTags } = useSelectedTagsStore();
   const router = useRouter();
 
   // tag가 선택되었는지 판별
@@ -39,38 +40,37 @@ export default function ButtonTags({
     }
   };
 
-  //태그 단일 검색
-  const searchTag = (tag : string) => {
+  // 태그 단일 검색
+  const searchTag = (tag: string) => {
+    clearTags();
     addTag(tag);
-    router.push(`/result?tag=${tag}`);
-
+    router.push(`/result?tag=${tag}&limit=${10}&skip=${0}`);
   }
 
   const className =
-    isClickedTag && isClickedStyle
-      ? isClickedStyle
+    isClickedTag && isImageClickedStyle
+      ? isImageClickedStyle
       : isClickedTag
-        ? 'h-10 bg-slate-200 border-2 border-sky-400 rounded-3xl px-4 py-0 w-auto'
+        ? 'h-10 bg-amber-400 rounded-3xl px-4 py-0 w-auto text-[#000]'
         : '';
+
   return (
     <button
-      className={`w-auto flex-row h-10 px-4 py-0 cursor-pointer font-semibold items-center border-2 border-transparent	
+      className={`w-auto flex-row h-10 ${isClickedTag ? 'px-1' : 'px-4'}  py-0 cursor-pointer items-center border-transparent
       rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
- 
-      opacity-60 `}
+      ${isDetail && 'bg-amber-400 mr-2 mb-2'} opacity-60 mb-1 `}
       onClick={isClickedTag && isImage
-        ? undefined 
-        : isImage 
-        ? () => searchTag?.(content)
-        : () => toggleTag?.(content)} // 클릭 핸들러 설정
+        ? undefined
+        : isImage
+          ? () => searchTag?.(content)
+          : () => toggleTag?.(content)} // 클릭 핸들러 설정
+      disabled={isDetail}
     >
-      <div className={`flex items-center
-${className}
-      `}>
+      <div className={`flex items-center ${className} `}>
         {content}
-        {isClickedTag && (
+        {isClickedTag && !(isDetail === true) && (
           <p
-            className="ml-2 cursor-pointer text-red-600"
+            className="ml-2 cursor-pointer text-red-500"
             onClick={() => toggleTag?.(content)}
           >
             x

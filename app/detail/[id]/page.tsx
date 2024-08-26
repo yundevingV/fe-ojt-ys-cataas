@@ -8,6 +8,11 @@ import calculateBytesToSize from "@/util/calculateBytesToSize";
 import Header from "@/components/header/Header";
 import ImageInfo from "@/components/Result/ImageInfo";
 import ButtonTags from "@/components/Tags/ButtonTags";
+import convertUTCToKST from "@/util/convertUTCtoKST";
+import { CiCalendar } from "react-icons/ci";
+import { IoTimeSharp } from "react-icons/io5";
+import { IoTimeOutline } from "react-icons/io5";
+import { FaFloppyDisk } from "react-icons/fa6";
 
 interface ResultDetailProps {
   params: {
@@ -39,27 +44,25 @@ export default function ResultDetail({ params }: ResultDetailProps) {
     <div>
       <Header />
 
-      <div className="flex p-8 text-xl justify-between pt-[180px]">
-        {/* 왼쪽부분 */}
+      <div className="pt-[180px]">
         <div>
           <img
             src={`https://cataas.com/cat/${catData?._id}`}
             alt="고양이 이미지"
-            className="max-w-lg max-h-screen aspect-auto	rounded-lg mx-auto" // 이미지 스타일
+            className="p-4 aspect-auto rounded-3xl mx-auto" // 이미지 스타일
           />
         </div>
 
-        {/* 오른쪽부분 */}
-        <div className="flex-col px-6 w-80 space-y-2">
+        <div className="py-10 px-3 space-y-3 sm:px-20 w-full">
       
-          <ImageInfo leftText='' rightText={`${calculateDateDifference(createdAt) + ' 일전'}` } />
-          <ImageInfo leftText='등록일' rightText={createdAt?.toLocaleString().split('오')[0]} />
-          <ImageInfo leftText='최종 수정일' rightText={editedAt?.toLocaleString().split('오')[0]} />
-          <ImageInfo leftText='크기' rightText={`${calculateBytesToSize(catData?.size)}`} />
+          <ImageInfo icon={CiCalendar} text={`${calculateDateDifference(createdAt) + ' 일전 등록함'}` } />
+          <ImageInfo icon={IoTimeSharp} text={`등록 ${convertUTCToKST(createdAt)}`} />
+          <ImageInfo icon={IoTimeOutline} text={`수정 ${convertUTCToKST(editedAt)}`} />
+          <ImageInfo icon={FaFloppyDisk} text={`크기 ${calculateBytesToSize(catData?.size)}`} />
     
-          <div className="flex">
+          <div className="flex flex-wrap ">
             {catData?.tags.map((tag, index) => (
-              <ButtonTags key={index} content={tag} hover="" active=""/>
+              <ButtonTags key={index} content={tag} hover="" active="" isDetail={true} />
             ))}
           </div>
         </div>

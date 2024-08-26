@@ -13,8 +13,8 @@ export interface CatDTO {
   mimetype: string; // MIME 타입
   size: number;   // 파일 크기
   tags: string[]; // 태그 배열
-  createdAt? : string;
-  editedAt?: string;
+  createdAt: string | Date;
+  editedAt: string | Date;
 }
 
 // 고양이 데이터 배열 인터페이스
