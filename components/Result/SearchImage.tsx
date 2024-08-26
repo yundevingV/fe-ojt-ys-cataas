@@ -34,18 +34,16 @@ export default function SearchImage({ cats }: SearchImageProps) {
     
     <div
       ref={ref}
-      className="relative cursor-pointer"
+      className={`relative cursor-pointer ${isVisible ? '' : 'h-[400px]'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-            style={{ height: '400px', overflowY: 'hidden' }} // 초기 높이 설정
-
     >
       {isVisible ? (
         <Link href={`/detail/${cats._id}`}>
           <img
             src={`https://cataas.com/cat/${cats._id}`}
             alt="고양이 이미지"
-            className="aspect-square rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-[1.03]" // 애니메이션 클래스 추가
+            className="rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-[1.03]" // 애니메이션 클래스 추가
           />
         </Link>
       ) : null}

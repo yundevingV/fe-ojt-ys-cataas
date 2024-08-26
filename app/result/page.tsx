@@ -2,6 +2,7 @@
 
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import Header from "@/components/header/Header";
+import ImageList from "@/components/ImageList/ImageList";
 import Pagination from "@/components/Result/Pagination";
 import SearchImage from "@/components/Result/SearchImage";
 import { useQuery } from "@tanstack/react-query";
@@ -62,19 +63,18 @@ export default function Result() {
               ))}
 
             </select> 개 의 검색 결과</h1>
-
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 px-8">
-            {catData?.cats.map(cat => (
-              <SearchImage key={cat._id} cats={cat} /> // 각 고양이 사진에 키 추가
-            ))}
+          <div className="flex px-8">
+            <ImageList
+              catData={catData}
+              start={0}
+              end={limit}
+            />
           </div>
         </>
       ) : (
         <div className="pt-[140px] flex-col justify-center items-center text-center space-y-5">
           <p className="text-2xl">" {tag} "로 검색된 고양이 사진이 없습니다.</p>
-
         </div>
-
       )}
       {/* 페이징 컴포넌트 */}
       <Pagination currentPage={skip} setCurrentPage={setSkip} />
