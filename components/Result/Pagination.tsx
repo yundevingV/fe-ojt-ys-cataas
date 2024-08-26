@@ -49,10 +49,10 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
       setCurrentPage(currentPage - 1);
     } else if (option === 'prevPerPage') {
       window.scrollTo(0, 0);
-      setCurrentPage(currentPage - 10);
+      setCurrentPage(currentPage - buttonPerPage);
     } else if (option === 'nextPerPage') {
       window.scrollTo(0, 0);
-      setCurrentPage(currentPage + 10);
+      setCurrentPage(currentPage + buttonPerPage);
     }
   };
 

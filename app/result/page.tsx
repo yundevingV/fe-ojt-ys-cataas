@@ -43,8 +43,8 @@ export default function Result() {
       <Header />
       {catData?.cats.length ? (
         <>
-          <h1 className="px-5 pt-[140px] text-xl">
-            {tag}의
+          <h1 className="px-5 pt-[140px] text-2xl mb-2">
+            " {tag} "의
             <select
               value={limit}
               onChange={(e) => {
