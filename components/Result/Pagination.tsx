@@ -10,10 +10,10 @@ interface PaginationProps {
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
-// 모바일일 페이지되는 갯수를 해서 / 10을 변수로 바꾸자 !
+
 export default function Pagination({ currentPage, setCurrentPage }: PaginationProps) {
   const [startPage, setStartPage] = useState<number>(0);
-  const [buttonPerPage,setButtonPerPage] = useState<number>(10);
+  const [buttonPerPage,setButtonPerPage] = useState<number>(10);  
 
   const router = useRouter();
   const searchParams = useSearchParams();

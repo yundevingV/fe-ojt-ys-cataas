@@ -55,11 +55,12 @@ export default function Result() {
             >
               개
               {/* 1부터 30까지의 페이지 갯수 옵션 설정 */}
-              {[...Array(30)].map((_, index) => (
-                <option key={index + 1} value={index + 1}>
-                  {index + 1}
+              {[...Array(6)].map((_, index) => (
+                <option key={index + 1} value={(index + 1) * 5}>
+                  {(index + 1) * 5}
                 </option>
               ))}
+
             </select> 개 의 검색 결과</h1>
 
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 p-2">
@@ -70,8 +71,8 @@ export default function Result() {
         </>
       ) : (
         <div className="pt-[140px] flex-col justify-center items-center text-center space-y-5">
-          <p className="text-2xl">"{tag}"로 검색된 고양이 사진이 없습니다.</p>
-          
+          <p className="text-2xl">" {tag} "로 검색된 고양이 사진이 없습니다.</p>
+
         </div>
 
       )}
