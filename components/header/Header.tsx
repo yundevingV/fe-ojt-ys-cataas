@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
 import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
 import Link from "next/link";
+import TagSection from "./TagSection";
 
 export default function Header() {
   const { data: tagsData, isLoading, error } = useQuery<GetTagsDTO>({
@@ -113,15 +114,10 @@ export default function Header() {
                 {selectedTags && (
                   <div className="flex-col">
 
-                    <div className="flex items-center space-x-3 mb-2" >
-                      <p className="text-lg font-semibold " >선택된 태그</p>
-                      <p
-                        className={`text-sm cursor-pointer`}
-                        onClick={clearTags}
-                        >
-                        전체 삭제
-                      </p>
-                    </div>
+                    <TagSection
+                      title='선택된 태그'
+                      actionLabel='전체 삭제'
+                    />
 
                     <div className={`flex`}>
                       {selectedTags.length ?
@@ -138,15 +134,12 @@ export default function Header() {
                   </div>
                 )}
                 <div className="flex-col ">
-                  <div className="flex items-center mb-2 space-x-2">
-                    <h3 className="text-lg font-semibold ">추천 태그 </h3>
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => refreshTag(tagsData)}
-                    >
-                      <GrPowerReset />
-                    </div>
-                  </div>
+                  <TagSection
+                    title="추천태그"
+                    refreshTag={refreshTag}
+                    tagsData={tagsData}
+                    actionIcon={GrPowerReset}
+                  />
                 </div>
                 <div className="flex flex-wrap space-x-2">
                   {randomTags && <ButtonTagsBox tag={randomTags} />}
