@@ -45,7 +45,6 @@ export default function ResultDetail({ params }: ResultDetailProps) {
       <Header />
 
       <div className="pt-[180px]">
-        {/* 왼쪽부분 */}
         <div>
           <img
             src={`https://cataas.com/cat/${catData?._id}`}
@@ -54,7 +53,6 @@ export default function ResultDetail({ params }: ResultDetailProps) {
           />
         </div>
 
-        {/* 오른쪽부분 */}
         <div className="py-10 px-3 space-y-3 sm:px-20 w-full">
       
           <ImageInfo icon={CiCalendar} text={`${calculateDateDifference(createdAt) + ' 일전 등록함'}` } />

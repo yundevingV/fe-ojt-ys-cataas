@@ -30,9 +30,6 @@ export default function Result() {
     router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip}`); // URL 업데이트
   }, [limit]);
 
-  const handleBack = () => {
-    router.back()
-  }
   if (isLoading) {
     return <p>로딩 중...</p>; // 로딩 상태 표시
   }
@@ -46,7 +43,7 @@ export default function Result() {
       <Header />
       {catData?.cats.length ? (
         <>
-          <h2 className="px-5 pt-[140px]">
+          <h1 className="px-5 pt-[140px] text-xl">
             {tag}의
             <select
               value={limit}
@@ -63,9 +60,7 @@ export default function Result() {
                   {index + 1}
                 </option>
               ))}
-            </select> 개 의 검색 결과:</h2>
-
-
+            </select> 개 의 검색 결과</h1>
 
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 p-2">
             {catData?.cats.map(cat => (
@@ -76,12 +71,7 @@ export default function Result() {
       ) : (
         <div className="pt-[140px] flex-col justify-center items-center text-center space-y-5">
           <p className="text-2xl">"{tag}"로 검색된 고양이 사진이 없습니다.</p>
-          <p 
-            className="text-xl"
-            onClick={handleBack}
-            >
-              이전페이지로
-        </p>
+          
         </div>
 
       )}

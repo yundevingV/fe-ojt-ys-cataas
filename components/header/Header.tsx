@@ -102,41 +102,52 @@ export default function Header() {
             onClick={() => setSearchModal(true)}
           />
 
-          <CiSearch 
-            onClick={() => handleSubmit(selectedTags)} 
+          <CiSearch
+            onClick={() => handleSubmit(selectedTags)}
             className="absolute left-3 text-gray-500 cursor-pointer" size={20} />
 
           {openSearchModal && (
             <>
-              <div className="fixed inset-0 z-0"></div>
-              <div ref={modalRef} className="absolute top-12 p-4 h-auto bg-white z-10 w-full">
+              <div className="fixed inset-0 z-0" />
+              <div ref={modalRef} className="absolute top-14 p-6 h-auto bg-white z-10 w-full rounded-lg">
                 {selectedTags && (
-                  <div>
-                    <h3 className="text-lg font-semibold">선택된 태그 </h3>
-                    {selectedTags.length ?
-                      <div className="flex p-2">
-                        <ButtonTagsBox tag={selectedTags} />
-                      </div>
-                      :
-                      <div className="flex justify-center p-4">
-                        선택된 태그가 없습니다.
-                      </div>
-                    }
+                  <div className="flex-col">
+
+                    <div className="flex items-center space-x-3 mb-2" >
+                      <p className="text-lg font-semibold " >선택된 태그</p>
+                      <p
+                        className={`text-sm cursor-pointer`}
+                        onClick={clearTags}
+                        >
+                        전체 삭제
+                      </p>
+                    </div>
+
+                    <div className={`flex`}>
+                      {selectedTags.length ?
+                        <div className="flex flex-wrap space-x-2">
+                          <ButtonTagsBox tag={selectedTags} />
+                        </div>
+                        :
+                        <div className="flex justify-center p-4">
+                          선택된 태그가 없습니다.
+                        </div>
+                      }
+                    </div>
 
                   </div>
                 )}
-                <div className="flex justify-between">
-                  <div className="flex items-center">
-                    <h3 className="text-lg font-semibold">추천 태그 </h3>
+                <div className="flex-col ">
+                  <div className="flex items-center mb-2 space-x-2">
+                    <h3 className="text-lg font-semibold ">추천 태그 </h3>
                     <div
-                      className="ml-2 cursor-pointer"
+                      className="cursor-pointer"
                       onClick={() => refreshTag(tagsData)}
                     >
                       <GrPowerReset />
                     </div>
                   </div>
                 </div>
-
                 <div className="flex flex-wrap space-x-2">
                   {randomTags && <ButtonTagsBox tag={randomTags} />}
                 </div>
