@@ -89,12 +89,12 @@ export default function Header() {
   }
 
   return (
-    <div className="fixed w-full h-[100px]  bg-white shadow-md z-10 flex items-center justify-center">
+    <div className="fixed w-full h-[100px]  bg-white shadow-md z-10 flex items-center justify-center ">
       <div className="flex-col items-center justify-center w-full max-w-2xl ">
         <Link className={`text-[28px] font-bold text-gray-800 text-center`} href='/' onClick={clear}>
           <p>cataas</p>
         </Link>
-        <div className="flex justify-center items-center relative w-2/3 mx-auto">
+        <div className="flex justify-center items-center relative w-2/3 mx-auto z-10">
           <input
             type="text"
             value={selectedTags}
@@ -115,8 +115,12 @@ export default function Header() {
 
           {openSearchModal && (
             <>
-              <div className="fixed inset-0 z-0" />
-              <div ref={modalRef} className="absolute top-14 p-6 h-auto bg-white z-10 w-full rounded-lg">
+              <div className="fixed inset-0 z-0 bg-black bg-opacity-20" />
+              <div
+                ref={modalRef} 
+                className="absolute top-14 p-6 h-auto bg-white z-10 w-full rounded-2xl
+                border-2 border-[#aaaaaa]
+                ">
                 {selectedTags && (
                   <div className="flex-col">
 
