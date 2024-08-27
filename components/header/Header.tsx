@@ -25,8 +25,6 @@ export default function Header() {
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
 
-
-
   const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags.length) {
       setSearchModal(false)

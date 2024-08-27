@@ -14,7 +14,6 @@ interface PaginationProps {
 export default function Pagination({ currentPage, setCurrentPage }: PaginationProps) {
   const [startPage, setStartPage] = useState<number>(0);
   const [buttonPerPage,setButtonPerPage] = useState<number>(10);  
-
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -33,7 +32,7 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
 
   useEffect(() => {
     setStartPage(Math.floor(currentPage / buttonPerPage)); // 나눗셈 버림
-    router.push(`/result?tag=${searchParams.get("tag")}&limit=${limit}&skip=${Number(limit)*currentPage}`);
+    // router.push(`/result?tag=${searchParams.get("tag")}&limit=${limit}&skip=${Number(limit)*currentPage}`);
 
   }, [currentPage,buttonPerPage]);
 

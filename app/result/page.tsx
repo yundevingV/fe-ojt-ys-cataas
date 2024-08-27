@@ -1,19 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import Header from "@/components/header/Header";
 import ImageList from "@/components/ImageList/ImageList";
 import Pagination from "@/components/Result/Pagination";
+import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
+import compareStringAndArray from "@/util/comparestringAndArray";
 
 export default function Result() {
+
   const searchParams = useSearchParams();
   const tag = searchParams.get("tag");
+  const { selectedTags } = useSelectedTagsStore();
 
-  const [limit, setLimit] = useState<number>(Number(searchParams.get("limit")) || 5);
-  const [skip, setSkip] = useState<number>(Number(searchParams.get("skip")) || 0);
+  const [limit, setLimit] = useState<number>(10);
+  const [skip, setSkip] = useState<number>(0);
 
   const { data: catData, isLoading, error, refetch } = useQuery<GetCatsDTO, Error>(
     {
@@ -23,9 +27,23 @@ export default function Result() {
     }
   );
 
+  const router = useRouter();
+
   useEffect(() => {
-    refetch(); 
+    refetch();
   }, [limit, skip, tag, refetch]);
+
+  // 태그를 검색했을때 디폴트 값으로 검색
+  useEffect(() => {
+    setLimit(10);
+    setSkip(0);
+    router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip}`);
+  }, [tag]);
+
+  // limit 을 변경했을때
+  useEffect(()=> {
+    router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip * limit}`);
+  },[limit,skip])
 
   if (isLoading) {
     return <p>로딩 중...</p>;
@@ -57,6 +75,7 @@ export default function Result() {
                 </option>
               ))}
             </select> 개의 검색 결과
+
           </h1>
           <div className="flex px-8">
             <ImageList
