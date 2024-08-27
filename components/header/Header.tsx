@@ -14,7 +14,7 @@ import Link from "next/link";
 import TagSection from "./TagSection";
 
 export default function Header() {
-  const { data: tagsData, isLoading, error } = useQuery<GetTagsDTO>({
+  const { data: tagsData } = useQuery<GetTagsDTO>({
     queryKey: ['tags-data'],
     queryFn: getTags,
   });
@@ -94,14 +94,6 @@ export default function Header() {
   const clear = () => {
     clearTags();
   };
-
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error) {
-    return <div>오류 발생: {error.message}</div>;
-  }
 
   return (
     <div className="fixed w-full h-[100px]  bg-white shadow-md z-10 flex items-center justify-center">

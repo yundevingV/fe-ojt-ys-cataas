@@ -3,7 +3,6 @@ import ButtonTags from "./ButtonTags";
 
 interface ButtonTagsBoxProps {
   tag: string[];
-
 }
 
 export default function ButtonTagsBox({ tag }: ButtonTagsBoxProps) {

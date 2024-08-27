@@ -21,20 +21,12 @@ interface ResultDetailProps {
 }
 
 export default function ResultDetail({ params }: ResultDetailProps) {
-  const { data: catData, isLoading, error } = useQuery<CatDTO, Error>(
+  const { data: catData } = useQuery<CatDTO, Error>(
     {
       queryKey: ['cat-data', params.id], // 쿼리 키에 id 추가
       queryFn: () => getCatDetail({ _id: params.id }), // getCatDetail 함수에 id를 전달
     }
   );
-
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error) {
-    return <div>오류 발생: {error.message}</div>;
-  }
 
   // 날짜 변환
   const createdAt = catData?.createdAt && new Date(catData?.createdAt);
