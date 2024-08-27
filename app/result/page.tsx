@@ -7,43 +7,44 @@ import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import Header from "@/components/header/Header";
 import ImageList from "@/components/ImageList/ImageList";
 import Pagination from "@/components/Result/Pagination";
-import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
-import compareStringAndArray from "@/util/comparestringAndArray";
 
 export default function Result() {
 
   const searchParams = useSearchParams();
+
   const tag = searchParams.get("tag");
-  const { selectedTags } = useSelectedTagsStore();
+  const limit = Number(searchParams.get("limit"))
+  const skip = Number(searchParams.get("skip"))
 
-  const [limit, setLimit] = useState<number>(10);
-  const [skip, setSkip] = useState<number>(0);
-
-  const { data: catData, isLoading, error, refetch } = useQuery<GetCatsDTO, Error>(
+  const { data: catData, isLoading, error } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['cat-data', limit, skip, tag],
-      queryFn: () => getCats({ limit, skip: skip * limit, tag }),
-      enabled: !!tag,
+      queryFn: () => getCats({ limit, skip, tag }),
     }
   );
 
   const router = useRouter();
 
-  useEffect(() => {
-    refetch();
-  }, [limit, skip, tag, refetch]);
+  // 페이지
+  const [currentPage, setCurrentPage] = useState<number>(0);
+
+  useEffect(()=>{
+    setCurrentPage(skip / limit);
+  },[skip])
+
+  useEffect(()=>{
+    router.push(`/result?tag=${tag}&limit=${limit}&skip=${limit * currentPage}`);
+  },[currentPage])
 
   // 태그를 검색했을때 디폴트 값으로 검색
   useEffect(() => {
-    setLimit(10);
-    setSkip(0);
+    
     router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip}`);
   }, [tag]);
 
-  // limit 을 변경했을때
-  useEffect(()=> {
-    router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip * limit}`);
-  },[limit,skip])
+  const handleLimit = (newValue : number) => {
+    router.push(`/result?tag=${tag}&limit=${newValue}&skip=${newValue * currentPage}`);
+  }
 
   if (isLoading) {
     return <p>로딩 중...</p>;
@@ -64,7 +65,7 @@ export default function Result() {
               value={limit}
               onChange={(e) => {
                 const newValue = Number(e.target.value);
-                setLimit(newValue);
+                handleLimit(newValue);
               }}
               className="border rounded"
             >
@@ -91,7 +92,7 @@ export default function Result() {
         </div>
       )}
       <div className={`sticky`}>
-        <Pagination currentPage={skip} setCurrentPage={setSkip} />
+        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>
       </div>
     </>
   );

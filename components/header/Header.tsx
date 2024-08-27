@@ -104,7 +104,7 @@ export default function Header() {
   }
 
   return (
-    <div className="fixed w-full h-[100px]  bg-white shadow-md z-10 flex items-center justify-center ">
+    <div className="fixed w-full h-[100px]  bg-white shadow-md z-10 flex items-center justify-center">
       <div className="flex-col items-center justify-center w-full max-w-2xl ">
         <Link className={`text-[28px] font-bold text-gray-800 text-center`} href='/' onClick={clear}>
           <p>cataas</p>

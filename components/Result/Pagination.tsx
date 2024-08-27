@@ -1,5 +1,4 @@
 import useWindowSize from '@/hooks/useWindowSize';
-import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaAngleRight } from "react-icons/fa6";
 import { FaAngleLeft } from "react-icons/fa6";
@@ -14,8 +13,6 @@ interface PaginationProps {
 export default function Pagination({ currentPage, setCurrentPage }: PaginationProps) {
   const [startPage, setStartPage] = useState<number>(0);
   const [buttonPerPage,setButtonPerPage] = useState<number>(10);  
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   const windowSize = useWindowSize();
 
@@ -28,12 +25,8 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
     }
   },[windowSize.width])
 
-  const limit = searchParams.get("limit");
-
   useEffect(() => {
     setStartPage(Math.floor(currentPage / buttonPerPage)); // 나눗셈 버림
-    // router.push(`/result?tag=${searchParams.get("tag")}&limit=${limit}&skip=${Number(limit)*currentPage}`);
-
   }, [currentPage,buttonPerPage]);
 
   const handleCurrentPage = (option: string | number) => {
@@ -54,7 +47,6 @@ export default function Pagination({ currentPage, setCurrentPage }: PaginationPr
       setCurrentPage(currentPage + buttonPerPage);
     }
   };
-
   const buttonPaddingStyle = `px-2 py-1`;
   return (
     <div className="flex items-center justify-center mt-4 pb-5">
