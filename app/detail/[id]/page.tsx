@@ -31,6 +31,7 @@ export default function ResultDetail({ params }: ResultDetailProps) {
   // 날짜 변환
   const createdAt = catData?.createdAt && new Date(catData?.createdAt);
   const editedAt = catData?.editedAt && new Date(catData?.editedAt);
+  const updatedAt = catData?.updatedAt && new Date(catData?.updatedAt);
 
   return (
     <div>
@@ -49,7 +50,11 @@ export default function ResultDetail({ params }: ResultDetailProps) {
       
           <ImageInfo icon={CiCalendar} text={`${calculateDateDifference(createdAt) + ' 일전 등록함'}` } />
           <ImageInfo icon={IoTimeSharp} text={`등록 ${convertUTCToKST(createdAt)}`} />
-          <ImageInfo icon={IoTimeOutline} text={`수정 ${convertUTCToKST(editedAt)}`} />
+          {editedAt ?     
+            <ImageInfo icon={IoTimeOutline} text={`수정 ${convertUTCToKST(editedAt)}`} />
+            :
+            <ImageInfo icon={IoTimeOutline} text={`수정 ${convertUTCToKST(updatedAt)}`} />
+        }
           <ImageInfo icon={FaFloppyDisk} text={`크기 ${calculateBytesToSize(catData?.size)}`} />
     
           <div className="flex flex-wrap ">

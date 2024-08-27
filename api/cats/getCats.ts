@@ -14,7 +14,8 @@ export interface CatDTO {
   size: number;   // 파일 크기
   tags: string[]; // 태그 배열
   createdAt: string | Date;
-  editedAt: string | Date;
+  editedAt?: string | Date;
+  updatedAt?: string | Date;
 }
 
 // 고양이 데이터 배열 인터페이스
