@@ -4,7 +4,7 @@ interface SelectedTagsStoreProps {
   selectedTags: string[];
   addTag: (tag: string) => void;
   removeTag: (tag: string) => void;
-  clearTags: () => void; // 새 메서드 추가
+  clearTags: () => void;
 }
 
 export const useSelectedTagsStore = create<SelectedTagsStoreProps>((set) => ({
@@ -18,6 +18,6 @@ export const useSelectedTagsStore = create<SelectedTagsStoreProps>((set) => ({
   removeTag: (tag) => set((state) => ({
     selectedTags: state.selectedTags.filter(t => t !== tag),
   })),
-  clearTags: () => set({ selectedTags: [] }), // 모든 태그를 지우는 메서드
+  clearTags: () => set({ selectedTags: [] })
 
 }));

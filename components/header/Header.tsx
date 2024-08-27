@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { GrPowerReset } from "react-icons/gr";
 import getRandomItems from "@/util/getRandomItems";
-import ButtonTagsBox from "../Tags/ButtonTagsBox";
+import ButtonTagsBox from "../tag/ButtonTagsBox";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
@@ -14,7 +14,7 @@ import Link from "next/link";
 import TagSection from "./TagSection";
 
 export default function Header() {
-  const { data: tagsData, isLoading, error } = useQuery<GetTagsDTO>({
+  const { data: tagsData } = useQuery<GetTagsDTO>({
     queryKey: ['tags-data'],
     queryFn: getTags,
   });
@@ -27,13 +27,28 @@ export default function Header() {
 
   const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags.length) {
-      setSearchModal(false)
+      setSearchModal(false);
       router.push(`/result?tag=${selectedTags}&limit=${10}&skip=${0}`);
     }
     else {
-      alert('검색할 태그를 지정해주세요 ! ')
+      alert('검색할 태그를 지정해주세요 ! ');
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event : any) => {
+      if (event.key === 'Enter') {
+        handleSubmit(selectedTags); // 엔터 키가 눌리면 검색 실행
+      }
+    };
+
+    const modalElement = modalRef.current;
+    modalElement?.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      modalElement?.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedTags]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -57,6 +72,7 @@ export default function Header() {
   }, [openSearchModal]);
 
   const [randomTags, setRamdomTag] = useState<string[]>();
+
   const refreshTag = (tagsData: GetTagsDTO | undefined) => {
     const refreshTags = tagsData && getRandomItems(tagsData, 20);
     setRamdomTag(refreshTags);
@@ -80,21 +96,13 @@ export default function Header() {
     clearTags();
   };
 
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error) {
-    return <div>오류 발생: {error.message}</div>;
-  }
-
   return (
     <div className="fixed w-full h-[100px]  bg-white shadow-md z-10 flex items-center justify-center">
       <div className="flex-col items-center justify-center w-full max-w-2xl ">
         <Link className={`text-[28px] font-bold text-gray-800 text-center`} href='/' onClick={clear}>
           <p>cataas</p>
         </Link>
-        <div className="flex justify-center items-center relative w-2/3 mx-auto">
+        <div className="flex justify-center items-center relative w-2/3 mx-auto z-10">
           <input
             type="text"
             value={selectedTags}
@@ -115,8 +123,16 @@ export default function Header() {
 
           {openSearchModal && (
             <>
-              <div className="fixed inset-0 z-0" />
-              <div ref={modalRef} className="absolute top-14 p-6 h-auto bg-white z-10 w-full rounded-lg">
+              <div 
+                ref={modalRef}
+                className="fixed inset-0 z-0 bg-black bg-opacity-20" 
+                tabIndex={0}
+                />
+              <div
+                ref={modalRef} 
+                className="absolute top-14 p-6 h-auto bg-white z-10 w-full rounded-2xl
+                border-2 border-[#aaaaaa]
+                ">
                 {selectedTags && (
                   <div className="flex-col">
 

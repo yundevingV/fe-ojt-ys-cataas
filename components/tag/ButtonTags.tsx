@@ -46,19 +46,22 @@ export default function ButtonTags({
     addTag(tag);
     router.push(`/result?tag=${tag}&limit=${10}&skip=${0}`);
   }
-
+  // isClickedTag 태그 클릭
+  // isImageClickedStyle 이미지에서 태그 클릭
   const className =
     isClickedTag && isImageClickedStyle
       ? isImageClickedStyle
-      : isClickedTag
-        ? 'h-10 bg-amber-400 rounded-3xl px-4 py-0 w-auto text-[#000]'
-        : '';
+      : isClickedTag || isDetail
+        ? 'h-10 bg-amber-400 rounded-3xl px-4 py-0 w-auto text-[#000] '
+        // 아무것도 없는 태그들 css
+        : `border-[${isImageClickedStyle ? '#fff' : '#2f2f2f' }]
+          border-2 px-4 py-1 rounded-3xl`;
 
   return (
     <button
-      className={`w-auto flex-row h-10 ${isClickedTag ? 'px-1' : 'px-4'}  py-0 cursor-pointer items-center border-transparent
+      className={`w-auto flex-row h-10 py-0 cursor-pointer items-center 
       rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
-      ${isDetail && 'bg-amber-400 mr-2 mb-2'} opacity-60 mb-1 `}
+      ${isDetail && 'bg-amber-400 mr-2 mb-2'} opacity-60 mb-2 mr-2`}
       onClick={isClickedTag && isImage
         ? undefined
         : isImage

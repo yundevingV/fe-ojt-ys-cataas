@@ -6,8 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import calculateDateDifference from "@/util/calculateDateDifference";
 import calculateBytesToSize from "@/util/calculateBytesToSize";
 import Header from "@/components/header/Header";
-import ImageInfo from "@/components/Result/ImageInfo";
-import ButtonTags from "@/components/Tags/ButtonTags";
+import ImageInfo from "@/components/result/ImageInfo";
+import ButtonTags from "@/components/tag/ButtonTags";
 import convertUTCToKST from "@/util/convertUTCtoKST";
 import { CiCalendar } from "react-icons/ci";
 import { IoTimeSharp } from "react-icons/io5";
@@ -21,20 +21,12 @@ interface ResultDetailProps {
 }
 
 export default function ResultDetail({ params }: ResultDetailProps) {
-  const { data: catData, isLoading, error } = useQuery<CatDTO, Error>(
+  const { data: catData } = useQuery<CatDTO, Error>(
     {
       queryKey: ['cat-data', params.id], // 쿼리 키에 id 추가
       queryFn: () => getCatDetail({ _id: params.id }), // getCatDetail 함수에 id를 전달
     }
   );
-
-  if (isLoading) {
-    return <div>로딩 중...</div>;
-  }
-
-  if (error) {
-    return <div>오류 발생: {error.message}</div>;
-  }
 
   // 날짜 변환
   const createdAt = catData?.createdAt && new Date(catData?.createdAt);
