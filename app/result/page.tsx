@@ -38,7 +38,6 @@ export default function Result() {
 
   // 태그를 검색했을때 디폴트 값으로 검색
   useEffect(() => {
-
     router.push(`/result?tag=${tag}&limit=${limit}&skip=${skip}`);
   }, [tag]);
 
