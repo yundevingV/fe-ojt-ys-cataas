@@ -43,7 +43,7 @@ export default function Result() {
   }, [tag]);
 
   const handleLimit = (newValue: number) => {
-    router.push(`/result?tag=${tag}&limit=${newValue}&skip=${newValue * currentPage}`);
+    router.push(`/result?tag=${tag}&limit=${newValue}&skip=${0}`);
   }
 
   return (
