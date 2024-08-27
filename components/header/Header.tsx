@@ -106,6 +106,7 @@ export default function Header() {
           <input
             type="text"
             value={selectedTags}
+            onChange={(e) => e.target.value}
             placeholder="검색어를 입력하세요"
             className="border border-gray-300 rounded-lg p-2 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="검색어 입력"

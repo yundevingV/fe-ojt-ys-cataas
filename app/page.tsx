@@ -2,13 +2,13 @@
 
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import Header from "@/components/header/Header";
-import ImageList from "@/components/imageList/ImageList";
+import ImageList from "@/components/imageList/ImageList";
 import getRandomNumbers from "@/util/getRandomNumber";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
 
-  const { data: catData, isLoading, } = useQuery<GetCatsDTO, Error>(
+  const { data: catData } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['first-cat-data'], // 쿼리 키
       queryFn: () => getCats({ limit: 10, skip: getRandomNumbers(0, 150), tag: '' }), // getCats 함수에 태그를 전달합니다.

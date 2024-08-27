@@ -47,50 +47,52 @@ export default function Result() {
   }
 
   return (
-    <>
+    <div className="">
       <Header />
       {isLoading ? (
         <div className="pt-[140px] mb-[50%] justify-center items-center text-center space-y-5">
           <p className="text-2xl"> 검색중입니다 ... </p>
         </div>
-        ) 
-        : catData?.cats.length ? (
-          <>
-            <h1 className="px-5 pt-[140px] text-2xl mb-2">
-              " {tag} "의
-              <select
-                value={limit}
-                onChange={(e) => {
-                  const newValue = Number(e.target.value);
-                  handleLimit(newValue);
-                }}
-                className="border rounded"
-              >
-                개
-                {[...Array(6)].map((_, index) => (
-                  <option key={index + 1} value={(index + 1) * 5}>
-                    {(index + 1) * 5}
-                  </option>
-                ))}
-              </select> 개의 검색 결과
-            </h1>
-
-            <div className="flex px-8">
-              <ImageList
-                catData={catData}
-                start={0}
-                end={limit}
-              />
-            </div>
-          </>
-        ) : (
+      ) 
+      : catData?.cats.length ? (
+        <>
+          <h1 className="px-5 pt-[140px] text-2xl mb-2">
+            " {tag} "의
+            <select
+              value={limit}
+              onChange={(e) => {
+                const newValue = Number(e.target.value);
+                handleLimit(newValue);
+              }}
+              className="border rounded"
+            >
+              개
+              {[...Array(6)].map((_, index) => (
+                <option key={index + 1} value={(index + 1) * 5}>
+                  {(index + 1) * 5}
+                </option>
+              ))}
+            </select> 개의 검색 결과
+          </h1>
+  
+          <div className="flex px-8">
+            <ImageList
+              catData={catData}
+              start={0}
+              end={limit}
+            />
+          </div>
+        </>
+      ) : (
         <div className="pt-[140px] mb-[50%] justify-center items-center text-center space-y-5">
           <p className="text-2xl">" {tag} "로 검색된 고양이 사진이 없습니다.</p>
         </div>
       )}
-      <div className={`sticky`}>
+      
+      {/* 페이지네이션을 하단으로 이동 */}
+      <div className="relative bottom-0">
         <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
-    </>
-  );
+    </div>
+  );  
 }
