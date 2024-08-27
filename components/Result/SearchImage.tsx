@@ -1,5 +1,5 @@
 import { CatDTO } from "@/api/cats/getCats";
-import ButtonTags from "@/components/Tags/ButtonTags";
+import ButtonTags from "@/components/tag/ButtonTags";
 import useLazyLoad from "@/hooks/useLazyLoad";
 import Link from "next/link";
 import { useState, useRef } from "react";

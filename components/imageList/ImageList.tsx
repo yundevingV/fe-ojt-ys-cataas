@@ -1,5 +1,5 @@
 import { GetCatsDTO } from "@/api/cats/getCats";
-import SearchImage from "../Result/SearchImage";
+import SearchImage from "../result/SearchImage";
 
 interface ImageListProps {
   catData: GetCatsDTO | undefined; // cats의 타입을 정의해 주세요.

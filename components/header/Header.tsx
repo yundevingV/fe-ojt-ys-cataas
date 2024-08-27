@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { CiSearch } from "react-icons/ci";
 import { GrPowerReset } from "react-icons/gr";
 import getRandomItems from "@/util/getRandomItems";
-import ButtonTagsBox from "../Tags/ButtonTagsBox";
+import ButtonTagsBox from "../tag/ButtonTagsBox";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
@@ -27,11 +27,11 @@ export default function Header() {
 
   const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags.length) {
-      setSearchModal(false)
+      setSearchModal(false);
       router.push(`/result?tag=${selectedTags}&limit=${10}&skip=${0}`);
     }
     else {
-      alert('검색할 태그를 지정해주세요 ! ')
+      alert('검색할 태그를 지정해주세요 ! ');
     }
   };
 
@@ -72,6 +72,7 @@ export default function Header() {
   }, [openSearchModal]);
 
   const [randomTags, setRamdomTag] = useState<string[]>();
+
   const refreshTag = (tagsData: GetTagsDTO | undefined) => {
     const refreshTags = tagsData && getRandomItems(tagsData, 20);
     setRamdomTag(refreshTags);

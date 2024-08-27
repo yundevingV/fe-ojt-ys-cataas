@@ -2,7 +2,7 @@
 
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import Header from "@/components/header/Header";
-import ImageList from "@/components/ImageList/ImageList";
+import ImageList from "@/components/imageList/ImageList";
 import getRandomNumbers from "@/util/getRandomNumber";
 import { useQuery } from "@tanstack/react-query";
 

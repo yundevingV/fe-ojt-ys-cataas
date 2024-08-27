@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getCats, GetCatsDTO } from "@/api/cats/getCats";
 import Header from "@/components/header/Header";
-import ImageList from "@/components/ImageList/ImageList";
-import Pagination from "@/components/Result/Pagination";
+import ImageList from "@/components/imageList/ImageList";
+import Pagination from "@/components/result/Pagination";
 
 export default function Result() {
 
