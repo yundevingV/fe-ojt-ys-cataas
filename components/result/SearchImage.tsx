@@ -40,7 +40,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
     <div
       ref={ref}
       className={`relative cursor-pointer 
-      ${!isLoaded && 'sm:min-h-40 bg-slate-300 animate-pulse rounded-lg'}`}
+      ${!isLoaded && 'sm:min-h-64 bg-slate-300 animate-pulse rounded-lg'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -49,15 +49,22 @@ export default function SearchImage({ cats }: SearchImageProps) {
         <Link href={`/detail/${cats._id}`} className="">
           <Image
             src={`https://cataas.com/cat/${cats._id}`}
-            width={2000}
+            width={600}
             height={500}
-            sizes="50vw"
+            sizes="600px"
             alt="고양이 이미지"
             className={`rounded-lg object-cover transition-transform duration-300 ease-in-out transform hover:scale-[1.03] ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => setIsLoaded(true)}
             onLoadingComplete={handleLoadingComplete}
             onError={() => setIsImageLoaded(false)} // 이미지 로드 실패 시 처리
           />
+          {/* <img
+            src={`https://cataas.com/cat/${cats._id}`}
+            alt="고양이 이미지"
+            className={`rounded-lg object-cover transition-transform duration-300 ease-in-out transform hover:scale-[1.03] ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => setIsLoaded(true)}
+            onError={() => setIsImageLoaded(false)} // 이미지 로드 실패 시 처리
+          /> */}
         </Link>
       )}
 

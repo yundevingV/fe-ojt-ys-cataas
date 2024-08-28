@@ -8,7 +8,7 @@ interface ImageListProps {
   start: number;
   end: number;
 }
-// sm:w-[calc(50%-16px)] lg:w-[calc(33.3%-21.3px)]
+
 export default function ImageList({ catData, start, end }: ImageListProps) {
   const breakpointColumnsObj = {
     default: 3, // 기본적으로 3열
