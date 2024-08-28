@@ -20,17 +20,17 @@ export default function ImageList({ catData, start, end }: ImageListProps) {
   const displayCount = catData && catData?.cats.length < end ? shortLimit : end;
 
   return (
-    <div className="flex flex-col sm:flex-row py-10 gap-5">
+    <div className="flex flex-col sm:flex-row py-10 gap-10">
       <div className="flex flex-col space-y-10">
         {catData?.cats.slice(start, displayCount / 2).map(cat => (
-          <div key={cat._id}>
+          <div key={cat._id} className="">
             <SearchImage cats={cat} />
           </div>
         ))}
       </div>
       <div className="flex flex-col space-y-10">
         {catData?.cats.slice(displayCount / 2, displayCount).map(cat => (
-          <div key={cat._id}>
+          <div key={cat._id} className="">
             <SearchImage cats={cat} />
           </div>
         ))}

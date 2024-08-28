@@ -34,7 +34,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
 
     <div
       ref={ref}
-      className={`relative cursor-pointer ${isVisible ? '' : 'h-[400px]'}`}
+      className={`relative cursor-pointer min-h-40 ${isVisible ? '' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

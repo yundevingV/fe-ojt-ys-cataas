@@ -11,7 +11,7 @@ export default function Home() {
   const { data: catData } = useQuery<GetCatsDTO, Error>(
     {
       queryKey: ['first-cat-data'], // 쿼리 키
-      queryFn: () => getCats({ limit: 10, skip: getRandomNumbers(0, 150), tag: '' }), // getCats 함수에 태그를 전달합니다.
+      queryFn: () => getCats({ limit: 10, skip: getRandomNumbers(0, 1500), tag: '' }), // getCats 함수에 태그를 전달합니다.
       staleTime: 1000 * 60 * 5,
     }
   );
