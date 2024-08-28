@@ -40,7 +40,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
     <div
       ref={ref}
       className={`relative cursor-pointer 
-      ${!isLoaded && 'w-full sm:min-h-40 bg-slate-300 animate-pulse rounded-lg'}`}
+      ${!isLoaded && 'sm:min-h-40 bg-slate-300 animate-pulse rounded-lg'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
