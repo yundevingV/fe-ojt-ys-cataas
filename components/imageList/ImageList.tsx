@@ -12,12 +12,12 @@ export default function ImageList({ catData, start, end }: ImageListProps) {
   const [shortLimit, setShortLimit] = useState<number>(0);
 
   useEffect(() => {
-    if (catData && catData.cats.length < 10) {
+    if (catData && catData.cats.length < end) {
       setShortLimit(catData.cats.length);
     }
   }, [catData]);
 
-  const displayCount = catData && catData?.cats.length < 10 ? shortLimit : end;
+  const displayCount = catData && catData?.cats.length < end ? shortLimit : end;
 
   return (
     <div className="flex flex-col sm:flex-row py-10 gap-5">
