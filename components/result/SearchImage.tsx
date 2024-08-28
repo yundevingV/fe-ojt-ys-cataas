@@ -12,11 +12,13 @@ export interface SearchImageProps {
 export default function SearchImage({ cats }: SearchImageProps) {
   const { ref, isVisible } = useLazyLoad();
   const [isHovered, setIsHovered] = useState(false);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [, setSelectedTags] = useState<string[]>([]);
 
+  // 이미지 로딩 스켈레톤
   const [isLoaded, setIsLoaded] = useState(false);
-  
+  // 최종 로딩 실패
+  const [isImageLoaded, setIsImageLoaded] = useState(true);
+
   const handleLoadingComplete = () => {
     setIsLoaded(true);
   };
@@ -38,11 +40,10 @@ export default function SearchImage({ cats }: SearchImageProps) {
     <div
       ref={ref}
       className={`relative cursor-pointer 
-        ${!isLoaded && 'w-full sm:min-h-40 bg-slate-300 animate-pulse rounded-lg'}`}
+      ${!isLoaded && 'w-full sm:min-h-40 bg-slate-300 animate-pulse rounded-lg'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-    
 
       {isVisible && (
         <Link href={`/detail/${cats._id}`} className="">
@@ -53,13 +54,18 @@ export default function SearchImage({ cats }: SearchImageProps) {
             sizes="50vw"
             alt="고양이 이미지"
             className={`rounded-lg object-cover transition-transform duration-300 ease-in-out transform hover:scale-[1.03] ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
-            onLoad={() => setIsImageLoaded(true)}
+            onLoad={() => setIsLoaded(true)}
             onLoadingComplete={handleLoadingComplete}
-
+            onError={() => setIsImageLoaded(false)} // 이미지 로드 실패 시 처리
           />
         </Link>
       )}
 
+      {!isImageLoaded && (
+        <div className="w-full h-full flex items-center justify-center ">
+          <p className="text-center">이미지를 불러올 수 없습니다.</p>
+        </div>
+      )}
       {isHovered && (
         <div
           ref={containerRef}
