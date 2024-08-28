@@ -3,26 +3,30 @@ import ButtonTags from "@/components/tag/ButtonTags";
 import useLazyLoad from "@/hooks/useLazyLoad";
 import Link from "next/link";
 import { useState, useRef } from "react";
+import Image from "next/image";
 
 export interface SearchImageProps {
   cats: CatDTO;
 }
 
 export default function SearchImage({ cats }: SearchImageProps) {
-
   const { ref, isVisible } = useLazyLoad();
-
   const [isHovered, setIsHovered] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [, setSelectedTags] = useState<string[]>([]);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  const handleLoadingComplete = () => {
+    setIsLoaded(true);
+  };
 
   // 태그 클릭 핸들러
   const toggleTag = (tag: string) => {
     setSelectedTags?.((prev) => {
       if (prev.includes(tag)) {
-        // 이미 존재하면 삭제
         return prev.filter((item) => item !== tag);
       } else {
-        // 존재하지 않으면 추가
         return [...prev, tag];
       }
     });
@@ -31,27 +35,35 @@ export default function SearchImage({ cats }: SearchImageProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   return (
-
     <div
       ref={ref}
-      className={`relative cursor-pointer min-h-40 ${isVisible ? '' : ''}`}
+      className={`relative cursor-pointer 
+        ${!isLoaded && 'w-full sm:min-h-40 bg-slate-300 animate-pulse rounded-lg'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isVisible ? (
-        <Link href={`/detail/${cats._id}`}>
-          <img
+    
+
+      {isVisible && (
+        <Link href={`/detail/${cats._id}`} className="">
+          <Image
             src={`https://cataas.com/cat/${cats._id}`}
+            width={2000}
+            height={500}
+            sizes="50vw"
             alt="고양이 이미지"
-            className="rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-[1.03]" // 애니메이션 클래스 추가
+            className={`rounded-lg object-cover transition-transform duration-300 ease-in-out transform hover:scale-[1.03] ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => setIsImageLoaded(true)}
+            onLoadingComplete={handleLoadingComplete}
+
           />
         </Link>
-      ) : null}
+      )}
 
       {isHovered && (
         <div
           ref={containerRef}
-          className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis flex "
+          className="absolute bottom-0 left-0 right-0 p-2 shadow-lg text-ellipsis flex"
           style={{
             background: 'linear-gradient(to top, rgba(20, 20, 20, 0.8) 4%, rgba(1, 1, 1, 0.5) 24%, rgba(1, 1, 1, 0.4) 100%)',
             maxHeight: '60px',
@@ -70,14 +82,13 @@ export default function SearchImage({ cats }: SearchImageProps) {
               active="active:bg-slate-300 hover:text-[#2f2f2f]"
             />
           ))}
-          {cats.tags.length > 3 &&
+          {cats.tags.length > 3 && (
             <Link href={`/detail/${cats._id}`}>
-              <p
-                className="text-[#fff] h-10 flex justify-center items-center ml-3 cursor-pointer">
+              <p className="text-[#fff] h-10 flex justify-center items-center ml-3 cursor-pointer">
                 더 보기
               </p>
             </Link>
-          }
+          )}
         </div>
       )}
     </div>
