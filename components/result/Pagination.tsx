@@ -12,22 +12,24 @@ interface PaginationProps {
 
 export default function Pagination({ currentPage, setCurrentPage }: PaginationProps) {
   const [startPage, setStartPage] = useState<number>(0);
-  const [buttonPerPage,setButtonPerPage] = useState<number>(10);  
+  const [buttonPerPage, setButtonPerPage] = useState<number>(10);
 
-  const windowSize = useWindowSize();
+  const { width } = useWindowSize();
 
-  useEffect(()=>{
-    if(windowSize.width > 768){
-      setButtonPerPage(10)
+  useEffect(() => {
+    if (width !== undefined) {
+      if (width > 768) {
+        setButtonPerPage(10)
+      }
+      else if (width <= 768) {
+        setButtonPerPage(5)
+      }
     }
-    else if (windowSize.width <= 768){
-      setButtonPerPage(5)
-    }
-  },[windowSize.width])
+  }, [width])
 
   useEffect(() => {
     setStartPage(Math.floor(currentPage / buttonPerPage)); // 나눗셈 버림
-  }, [currentPage,buttonPerPage]);
+  }, [currentPage, buttonPerPage]);
 
   const handleCurrentPage = (option: string | number) => {
     if (typeof option === 'number') {
