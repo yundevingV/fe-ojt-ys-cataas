@@ -49,17 +49,17 @@ export default function SearchImage({ cats }: SearchImageProps) {
         <Link href={`/detail/${cats._id}`} className="">
           <Image
             src={`https://cataas.com/cat/${cats._id}`}
-            width={600}
+            width={1000}
             height={500}
             sizes="(max-width: 500px) 80vw,
-            (max-width: 700px) 50vw,
-            25vw"
+            (max-width: 900px) 50vw,
+            35vw"
             alt="고양이 이미지"
             className={`rounded-lg object-cover transition-transform duration-300 ease-in-out transform  ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => setIsLoaded(true)}
             onLoadingComplete={handleLoadingComplete}
             onError={() => setIsImageLoaded(false)} // 이미지 로드 실패 시 처리
-                        loading="lazy" // lazy loading 사용
+            loading="lazy" // lazy loading 사용
 
           />
         </Link>

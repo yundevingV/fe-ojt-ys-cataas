@@ -12,8 +12,8 @@ interface ImageListProps {
 export default function ImageList({ catData, start, end }: ImageListProps) {
   const breakpointColumnsObj = {
     default: 3, // 기본적으로 3열
-    1100: 3,    // 1100px 이상일 때 3열
-    700: 2,     // 700px 이상일 때 2열
+    1300: 3,    // 1100px 이상일 때 3열
+    900: 2,     // 700px 이상일 때 2열
     500: 1      // 500px 이상일 때 1열
   };
 
@@ -24,7 +24,7 @@ export default function ImageList({ catData, start, end }: ImageListProps) {
       columnClassName="" // Tailwind CSS로 패딩 추가
     >
       {catData?.cats.slice(start, end).map(cat => (
-        <div key={cat._id} className="flex-shrink-0 w-full h-auto py-5 px-5">
+        <div key={cat._id} className="flex-shrink-0 w-full h-auto p-5">
           <SearchImage cats={cat} />
         </div>
       ))}
