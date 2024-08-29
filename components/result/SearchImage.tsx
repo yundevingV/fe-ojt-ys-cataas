@@ -39,7 +39,7 @@ export default function SearchImage({ cats }: SearchImageProps) {
   return (
     <div
       ref={ref}
-      className={`relative cursor-pointer 
+      className={`relative cursor-pointer
       ${!isLoaded && 'sm:min-h-64 min-h-80 bg-slate-300 animate-pulse rounded-lg'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -51,12 +51,16 @@ export default function SearchImage({ cats }: SearchImageProps) {
             src={`https://cataas.com/cat/${cats._id}`}
             width={600}
             height={500}
-            sizes="500px"
+            sizes="(max-width: 500px) 80vw,
+            (max-width: 700px) 50vw,
+            25vw"
             alt="고양이 이미지"
-            className={`rounded-lg object-cover transition-transform duration-300 ease-in-out transform hover:scale-[1.03] ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`rounded-lg object-cover transition-transform duration-300 ease-in-out transform  ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => setIsLoaded(true)}
             onLoadingComplete={handleLoadingComplete}
             onError={() => setIsImageLoaded(false)} // 이미지 로드 실패 시 처리
+                        loading="lazy" // lazy loading 사용
+
           />
         </Link>
       )}
