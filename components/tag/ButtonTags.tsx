@@ -54,12 +54,12 @@ export default function ButtonTags({
       : isClickedTag || isDetail
         ? 'h-10 bg-amber-400 rounded-3xl px-4 py-0 w-auto text-[#000] '
         // 아무것도 없는 태그들 css
-        : `border-[${isImageClickedStyle ? '#fff' : '#2f2f2f' }]
+        : `border-[${isImageClickedStyle ? '#fff' : '#2f2f2f' }] 
           border-2 px-4 py-1 rounded-3xl`;
 
   return (
     <button
-      className={`w-auto flex-row h-10 py-0 cursor-pointer items-center 
+      className={`w-auto flex-row h-10 py-0 cursor-pointer items-center flex-shrink-0
       rounded-3xl ${textColor} ${!isClickedTag && (hover ? hover : '')} ${!isClickedTag && (active ? active : '')}
       ${isDetail && 'bg-amber-400 mr-2 mb-2'} opacity-60 mb-2 mr-2`}
       onClick={isClickedTag && isImage
@@ -69,7 +69,7 @@ export default function ButtonTags({
           : () => toggleTag?.(content)} // 클릭 핸들러 설정
       disabled={isDetail}
     >
-      <div className={`flex items-center ${className} `}>
+      <div className={`flex items-center ${className} w-auto`}>
         {content}
         {isClickedTag && !(isDetail === true) && (
           <p
