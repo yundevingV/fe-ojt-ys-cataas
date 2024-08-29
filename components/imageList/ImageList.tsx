@@ -20,7 +20,7 @@ export default function ImageList({ catData, start, end }: ImageListProps) {
   return (
     <Masonry
       breakpointCols={breakpointColumnsObj}
-      className="flex"
+      className="flex mx-auto"
       columnClassName="" // Tailwind CSS로 패딩 추가
     >
       {catData?.cats.slice(start, end).map(cat => (
