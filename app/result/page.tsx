@@ -47,7 +47,6 @@ export default function Result() {
 
   return (
     <div className="">
-      <Header />
       {isLoading ? (
         <div className="pt-[140px] mb-[50%] justify-center items-center text-center space-y-5">
           <p className="text-2xl"> 검색중입니다 ... </p>

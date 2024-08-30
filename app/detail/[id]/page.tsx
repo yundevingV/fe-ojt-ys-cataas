@@ -35,7 +35,6 @@ export default function ResultDetail({ params }: ResultDetailProps) {
 
   return (
     <div>
-      <Header />
 
       <div className="pt-[180px]">
         <div>

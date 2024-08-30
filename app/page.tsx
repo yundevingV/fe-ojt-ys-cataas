@@ -19,7 +19,6 @@ export default function Home() {
   return (
     <div className="">
       {/* 검색 헤더 */}
-      <Header />
 
       {/* 랜덤 검색 결과 */}
       <div className="flex px-8 pt-[140px]">

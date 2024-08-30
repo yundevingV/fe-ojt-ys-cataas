@@ -8,26 +8,29 @@ import getRandomItems from "@/util/getRandomItems";
 import ButtonTagsBox from "../tag/ButtonTagsBox";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchModalStore } from "@/hooks/zustand/useSearchModalStore";
 import { useSelectedTagsStore } from "@/hooks/zustand/useSelectedTagsStore";
 import Link from "next/link";
 import TagSection from "./TagSection";
 
-export default function Header() {
+interface HeaderProps {
+  openSearchModal : boolean;
+  setOpenSearchModal : React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function Header({openSearchModal, setOpenSearchModal} : HeaderProps) {
   const { data: tagsData } = useQuery<GetTagsDTO>({
     queryKey: ['tags-data'],
     queryFn: getTags,
   });
 
   const searchParams = useSearchParams();
-  const { openSearchModal, setSearchModal } = useSearchModalStore();
   const { selectedTags, addTag, clearTags } = useSelectedTagsStore();
   const router = useRouter();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = (selectedTags: string[]) => {
     if (selectedTags.length) {
-      setSearchModal(false);
+      setOpenSearchModal(false);
       router.push(`/result?tag=${selectedTags}&limit=${10}&skip=${0}`);
     }
     else {
@@ -53,7 +56,7 @@ export default function Header() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        setSearchModal(false);
+        setOpenSearchModal(false);
       }
     };
 
@@ -61,7 +64,7 @@ export default function Header() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [setSearchModal]);
+  }, [setOpenSearchModal]);
 
   useEffect(() => {
     if (openSearchModal) {
@@ -110,7 +113,7 @@ export default function Header() {
             placeholder="검색어를 입력하세요"
             className="border border-gray-300 rounded-lg p-2 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             aria-label="검색어 입력"
-            onClick={() => setSearchModal(true)}
+            onClick={() => setOpenSearchModal(true)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 handleSubmit(selectedTags);
